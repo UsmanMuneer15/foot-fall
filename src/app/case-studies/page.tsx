@@ -13,7 +13,7 @@ export default function CaseStudiesPage() {
     <>
       <PageHero
         eyebrow="Case Studies"
-        title="REAL PEOPLE. REAL RESULTS."
+        title={["REAL PEOPLE.", "REAL RESULTS."]}
         description="Every major activation becomes a structured FOOTFALL case study: Event, Client / Partner, Challenge, FOOTFALL Concept, Activation, Visitor Experience, Measured Results, Gallery / Video and Outcome."
         image="/images/proof-dog.png"
         imageAlt="FOOTFALL ADIHEX activation for a greater cause"

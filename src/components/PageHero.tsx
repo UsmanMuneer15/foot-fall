@@ -2,7 +2,8 @@ import Image from "next/image";
 
 type PageHeroProps = {
   eyebrow?: string;
-  title: string;
+  /** Plain string, or line-by-line array (forced breaks on all devices) */
+  title: string | readonly string[];
   description?: string;
   /** Topic-related background image for this page */
   image?: string;
@@ -17,6 +18,7 @@ export function PageHero({
   imageAlt = "",
 }: PageHeroProps) {
   const isSvg = image?.endsWith(".svg");
+  const lines = Array.isArray(title) ? title : [title];
 
   return (
     <section className="relative overflow-hidden border-b border-ff-gold/20 pt-28 pb-14 sm:pt-32 sm:pb-20">
@@ -59,7 +61,11 @@ export function PageHero({
       <div className="relative mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
         {eyebrow ? <p className="section-label mb-4">{eyebrow}</p> : null}
         <h1 className="ff-heading ff-heading-lg max-w-5xl">
-          {title}
+          {lines.map((line) => (
+            <span key={line} className="block">
+              {line}
+            </span>
+          ))}
         </h1>
         {description ? (
           <p className="mt-6 max-w-2xl text-base font-normal leading-relaxed text-white sm:text-lg">

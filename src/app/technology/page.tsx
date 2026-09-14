@@ -21,7 +21,7 @@ export default function TechnologyPage() {
     <>
       <PageHero
         eyebrow="Technology & Data"
-        title="FOOTFALL YOU CAN MEASURE."
+        title={["FOOTFALL", "YOU CAN MEASURE."]}
         description="A successful activation should produce more than photographs. FOOTFALL can integrate registration and visitor-management technology into the experience where appropriate."
         image="/images/exp-touch.png"
         imageAlt="FOOTFALL interactive touchscreen technology"

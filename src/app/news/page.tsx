@@ -29,7 +29,7 @@ export default function NewsPage() {
     <>
       <PageHero
         eyebrow="News"
-        title="FOOTFALL STORIES"
+        title={["FOOTFALL", "STORIES"]}
         description="Future activations continuously feed this section so the website builds a visible record of proven work."
         image="/images/exp-led.png"
         imageAlt="FOOTFALL walking LED media activation"

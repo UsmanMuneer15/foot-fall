@@ -12,7 +12,7 @@ export default function ContactPage() {
     <>
       <PageHero
         eyebrow="Contact"
-        title="WHERE DO YOU NEED THE CROWD?"
+        title={["WHERE DO YOU", "NEED THE CROWD?"]}
         description="Tell us about your brand, event, venue or destination. FOOTFALL GLOBAL will develop an experience designed to bring people to it."
         image="/images/hero-event.jpg"
         imageAlt="Crowd at a FOOTFALL event destination"

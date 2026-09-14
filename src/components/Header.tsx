@@ -37,11 +37,13 @@ export function Header() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-8 sm:py-3.5 lg:px-12">
-        <Logo />
+      <div className="mx-auto grid max-w-[1440px] grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 px-4 py-3 sm:gap-x-6 sm:px-8 sm:py-3.5 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-x-8 lg:px-12">
+        <div className="min-w-0 justify-self-start">
+          <Logo />
+        </div>
 
         <nav
-          className="absolute left-1/2 hidden max-w-[min(52vw,40rem)] -translate-x-1/2 items-center gap-3 xl:max-w-none xl:gap-7 lg:flex lg:gap-4"
+          className="hidden items-center justify-center gap-5 lg:flex xl:gap-7"
           aria-label="Primary"
         >
           {navLinks.map((link) => {
@@ -66,7 +68,7 @@ export function Header() {
           })}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+        <div className="flex shrink-0 items-center justify-self-end gap-2 sm:gap-3">
           {/* Desktop only — .btn-outline-gold sets display, so hide via wrapper */}
           <div className="hidden lg:block">
             <Link

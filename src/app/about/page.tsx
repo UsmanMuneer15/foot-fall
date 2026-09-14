@@ -12,7 +12,7 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About FOOTFALL"
-        title="THE VISION BEHIND FOOTFALL"
+        title={["THE VISION", "BEHIND FOOTFALL"]}
         description="FOOTFALL GLOBAL is built around a simple belief: people remember experiences longer than they remember advertisements."
         image="/images/hero-right-bright.png"
         imageAlt="FOOTFALL activation — the vision behind memorable experiences"
