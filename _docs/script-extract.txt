@@ -1,0 +1,220 @@
+FOOTFALL GLOBAL LLC - Final Website Developer Script Page 1
+FOOTFALL GLOBAL LLC
+FINAL WEBSITE DEVELOPER SCRIPT & CREATIVE DIRECTION
+TURNING SPACES INTO DESTINATIONS.
+Brand positioning, page architecture, approved messaging, content hierarchy, case-study direction and
+development notes.
+Visual identity: Deep luxury green + metallic gold. Premium, contemporary, experiential and technology-led.
+
+-- 1 of 7 --
+
+FOOTFALL GLOBAL LLC - Final Website Developer Script Page 2
+1. PURPOSE OF THIS DOCUMENT
+This document is the final content and creative-direction brief for the FOOTFALL GLOBAL LLC website. It should be
+used by the web developer, UI/UX designer, content team and motion designer as the primary reference for completing
+the site.
+The website must sell the FOOTFALL idea before it sells equipment. FOOTFALL is an experiential engagement and
+audience-attraction company. Its products, technology and event infrastructure are the tools used to create the
+experience.
+2. BRAND FOUNDATION
+Company: FOOTFALL GLOBAL LLC
+Proprietor: Amal El Houm
+Locked master slogan: TURNING SPACES INTO DESTINATIONS.
+Core business: Experiential engagement, event activations, audience attraction, event technology and measurable
+visitor interaction.
+The master slogan must be used exactly as written. Do not replace it with another primary slogan unless specifically
+approved.
+3. THE FOOTFALL POSITIONING
+FOOTFALL GLOBAL exists to create a reason for people to approach a particular place, brand, stand, venue or event
+zone. The company develops experiences that attract attention, encourage participation and create a memorable
+connection between the audience and the brand.
+The positioning is not: an event-equipment rental company that also creates activations.
+The positioning is: an experiential engagement company that controls the concepts, technology, equipment and
+infrastructure required to deliver those experiences.
+The central philosophy is: Experience instead of direct selling.
+4. BRAND EXPERIENCE MODEL
+Use the following engagement journey throughout the site:
+ATTRACT -> ENGAGE -> EXPERIENCE -> CAPTURE -> CONNECT
+ATTRACT: Create something visually difficult to ignore.
+ENGAGE: Give people a reason to approach and participate.
+EXPERIENCE: Make the interaction memorable and relevant to the brand.
+CAPTURE: Where appropriate, use registration, QR, touchscreen or event technology to measure engagement.
+CONNECT: Extend the relationship beyond the physical activation.
+5. VISUAL IDENTITY - LOCKED DIRECTION
+The website must follow the FOOTFALL visual identity already established by the logo and approved concept.
+Primary background: Deep luxury green.
+Primary accent: Metallic / warm gold.
+Supporting tones: Off-white, muted cream, charcoal and controlled black.
+Logo treatment: Gold logo on deep green wherever practical.
+
+-- 2 of 7 --
+
+FOOTFALL GLOBAL LLC - Final Website Developer Script Page 3
+The visual language should feel premium, cinematic, modern and controlled. Avoid bright generic corporate colors,
+excessive gradients, cheap neon effects, cluttered iconography and template-style event-rental design.
+Actual activation photography and video should provide movement and additional color while the website framework
+remains predominantly green and gold.
+6. HOMEPAGE - HERO SECTION
+The first screen must communicate the company in seconds.
+Primary headline:
+TURNING SPACES INTO DESTINATIONS.
+Supporting copy:
+We create experiences that attract people, inspire participation and turn ordinary spaces into places people want to be.
+Primary CTA: EXPLORE EXPERIENCES
+Secondary CTA: CREATE AN ACTIVATION
+The hero should use a strong full-width image or short cinematic loop showing a FOOTFALL activation with genuine
+audience participation. The activation should be the visual hero; do not lead with furniture or isolated equipment.
+7. HOMEPAGE - IMMEDIATE SERVICE STRIP
+Directly below the hero, show six clean categories using refined gold line icons:
+EXPERIENTIAL ACTIVATIONS
+DIGITAL EXPERIENCES
+EVENT TECHNOLOGY
+CROWD MANAGEMENT
+EVENT ENVIRONMENTS
+CONSULTATION & CONCEPT DEVELOPMENT
+This gives visitors an immediate understanding of the company's capabilities without turning the homepage into a
+product catalogue.
+8. PROOF SECTION - ADIHEX 2026
+Headline: REAL PEOPLE. REAL RESULTS.
+Primary statistic: 4,700+ REGISTERED VISITORS
+FOOTFALL GLOBAL's first major Abu Dhabi activation at ADIHEX 2026 demonstrated the model in practice. An
+approximately 4m x 4m Giant Claw activation created a visible attraction, generated queues and encouraged visitors to
+participate while supporting the wider objective of increasing awareness around dogs and cats requiring adoption, care
+and responsible rehoming.
+Use actual photography and video from the event. Supporting proof points may include: visitor queues, social
+sharing, brand engagement and measurable registration.
+CTA: VIEW CASE STUDY
+
+-- 3 of 7 --
+
+FOOTFALL GLOBAL LLC - Final Website Developer Script Page 4
+9. CASE STUDY STRUCTURE
+Every major activation should become a structured FOOTFALL case study. Use the same format each time:
+Event - where and when the activation happened.
+Client / Partner - who the experience supported.
+Challenge - what the client needed to achieve.
+FOOTFALL Concept - the creative solution.
+Activation - what was physically or digitally deployed.
+Visitor Experience - how people interacted with it.
+Measured Results - registrations, interactions or other verified metrics.
+Gallery / Video - visual evidence.
+Outcome - what the activation achieved for the brand.
+10. EXPERIENCE / PROCESS SECTION
+Headline: WE ENGINEER ATTENTION.
+Display the five-stage FOOTFALL process horizontally on desktop and vertically on mobile:
+01 ATTRACT - Create something impossible to ignore.
+02 ENGAGE - Give people a reason to participate.
+03 EXPERIENCE - Make the interaction memorable.
+04 CAPTURE - Turn participation into measurable engagement.
+05 CONNECT - Build a relationship beyond the event.
+11. EXPERIENCES - PRODUCT ARCHITECTURE
+Products should live inside experience categories, not as an unstructured rental list.
+Experiential Activations: Giant Claw Machine, gift activations, custom interactive concepts, custom mascots and
+custom plush toys.
+Digital Experiences: Walking LED billboard bags, indoor LED walls, 43-inch touchscreen displays, custom LED
+content and digital brand experiences.
+Event Technology: PTZ cameras, standard controllers, video controllers, tablets, custom crowd-control software, QR
+registration and visitor-registration systems.
+Crowd & Visitor Management: Queueing systems, barricades, wristbands, visitor-flow systems and registration
+management.
+Event Environments: Exhibition lighting with dimmers, cocktail tables, high leather chairs, single-seater chairs, Elite
+Tables and supporting event infrastructure.
+Consultation & Concept Development: Activation strategy, creative consultation, visitor-engagement planning,
+concept development, brand-experience strategy and custom event solutions.
+12. FEATURED EXPERIENCE - GIANT CLAW
+Headline: THE GIANT CLAW
+Subheading: A familiar game transformed into an event landmark.
+At approximately 4m x 4m, the FOOTFALL Giant Claw is designed to become a visual destination inside an exhibition,
+
+-- 4 of 7 --
+
+FOOTFALL GLOBAL LLC - Final Website Developer Script Page 5
+festival, mall or public event. Its scale creates curiosity. Participation creates entertainment. Queues create further
+curiosity. The audience itself begins attracting another audience.
+Possible customisation includes branding, LED displays, custom content, lighting, plush toys, campaign prizes, QR
+registration, visitor data capture and queue management.
+Campaign line: DON'T WAIT FOR THE CROWD. CREATE IT.
+13. FEATURED EXPERIENCE - GIFT TREE
+Headline: DISCOVERY CREATES ENGAGEMENT.
+The Gift Tree turns a branded display into a physical discovery experience. Branded cards or objects become part of the
+interaction, with surprises revealed through participation.
+The principle is simple: when the audience interacts with the branding, the branding becomes part of the
+memory.
+14. WALKING LED MEDIA
+Headline: TAKE THE MESSAGE TO THE CROWD.
+Walking LED billboard bags allow digital content to move through exhibitions, malls and event environments instead of
+waiting for the audience to pass a static display. This product should be presented as mobile audience attraction and
+directional media rather than simply a screen mounted on a backpack.
+15. TECHNOLOGY & DATA
+Headline: FOOTFALL YOU CAN MEASURE.
+A successful activation should produce more than photographs. FOOTFALL can integrate registration and
+visitor-management technology into the experience where appropriate.
+Suggested visual journey: VISITOR -> QR / TABLET / TOUCHSCREEN -> REGISTRATION -> PARTICIPATION ->
+AUDIENCE DATA -> POST-EVENT CONNECTION.
+Only publish data-capture, analytics or tracking capabilities that the deployed system actually supports.
+16. ABOUT AMAL EL HOUM
+Headline: THE VISION BEHIND FOOTFALL
+Amal El Houm
+Proprietor, FOOTFALL GLOBAL LLC
+FOOTFALL GLOBAL is built around a simple belief: people remember experiences longer than they remember
+advertisements.
+Amal El Houm's vision is to create a different approach to audience engagement - one where brands move beyond
+direct selling and instead create experiences people genuinely want to approach, participate in and share.
+Through creativity, technology and physical activations, FOOTFALL GLOBAL aims to transform ordinary event spaces
+into destinations and passing audiences into engaged communities.
+
+-- 5 of 7 --
+
+FOOTFALL GLOBAL LLC - Final Website Developer Script Page 6
+The objective is not simply to put a brand in front of people. It is to give people a reason to come to the brand.
+17. NEWS SECTION - FOOTFALL STORIES
+Use FOOTFALL STORIES as the editorial/news identity.
+Initial article ideas:
+4,700+ VISITORS: FOOTFALL GLOBAL MAKES ITS ABU DHABI DEBUT AT ADIHEX 2026
+THE GIANT CLAW: HOW SCALE TURNED AN ACTIVATION INTO AN ATTRACTION
+THE GIFT TREE: TURNING BRAND PLACEMENT INTO DISCOVERY
+Future activations should continuously feed this section so the website builds a visible record of proven work.
+18. CONTACT / CONVERSION SECTION
+Headline: WHERE DO YOU NEED THE CROWD?
+Supporting copy: Tell us about your brand, event, venue or destination. FOOTFALL GLOBAL will develop an experience
+designed to bring people to it.
+Recommended form fields: Name, Company, Email, Telephone, Event / Venue, Event Date, Location, Expected
+Attendance, What Are You Trying to Achieve?, Message.
+CTA: CREATE MY ACTIVATION
+19. MAIN NAVIGATION
+Recommended desktop navigation:
+HOME | ABOUT | EXPERIENCES | TECHNOLOGY | CASE STUDIES | NEWS | CONTACT
+Persistent highlighted CTA: CREATE AN ACTIVATION
+Mobile navigation should remain minimal and retain the Create an Activation CTA.
+20. UX / DEVELOPMENT DIRECTION
+The site must be responsive across desktop, tablet and mobile. Prioritise fast loading, compressed media, clean
+transitions and clear CTA placement.
+Use subtle motion rather than excessive animation. Recommended effects include controlled image reveals, statistic
+counters, short hover transitions, scroll-triggered process steps and restrained gold-line movement.
+Video should be muted by default and optimised for web delivery. Provide static poster images as fallbacks. Text must
+remain readable over all media using controlled overlays where necessary.
+The website should feel premium and cinematic without sacrificing speed or usability.
+21. CONTENT RULES
+1. Do not describe FOOTFALL primarily as a rental company.
+2. Lead with experience, attraction, participation and measurable engagement.
+3. Use verified numbers only.
+
+-- 6 of 7 --
+
+FOOTFALL GLOBAL LLC - Final Website Developer Script Page 7
+4. Use actual event imagery whenever available.
+5. Keep copy concise on visual pages; deeper information belongs inside case studies and service pages.
+6. Maintain the deep-green and gold identity consistently.
+7. Keep the master slogan exactly as: TURNING SPACES INTO DESTINATIONS.
+8. Present equipment as part of an integrated solution, not as the brand's core identity.
+22. FINAL POSITIONING FOR THE DEVELOPMENT TEAM
+The website should leave a visitor with one clear understanding:
+FOOTFALL GLOBAL creates experiences that make people want to come to a place.
+The company can then support those ideas with the physical activation, technology, media, crowd systems and event
+infrastructure required to execute them.
+The idea is the product. The equipment enables the idea. The audience experience proves the value.
+FOOTFALL GLOBAL LLC
+TURNING SPACES INTO DESTINATIONS.
+
+-- 7 of 7 --
+

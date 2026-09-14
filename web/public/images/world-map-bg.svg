@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="55%" r="55%">
+      <stop offset="0%" stop-color="#1a6b45" stop-opacity="0.55"/>
+      <stop offset="45%" stop-color="#0a3a28" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#001a11" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="horizon" cx="50%" cy="100%" r="70%">
+      <stop offset="0%" stop-color="#c5a059" stop-opacity="0.35"/>
+      <stop offset="35%" stop-color="#1f8a55" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#001a11" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="1.2" cy="1.2" r="0.7" fill="#7ec9a0" fill-opacity="0.35"/>
+    </pattern>
+    <mask id="land">
+      <!-- Simplified continents -->
+      <rect width="1600" height="800" fill="black"/>
+      <!-- N America -->
+      <path fill="white" d="M280 160c40-30 90-40 140-35 55 5 95 30 120 70 20 32 18 70 5 100-10 25-35 45-60 55-30 12-70 10-95-10-35-28-55-70-50-115 3-20 15-45 40-65z"/>
+      <path fill="white" d="M360 340c25 15 40 45 35 75-8 40-40 70-75 80-20 6-45 0-55-20-12-25 0-55 20-75 25-25 50-40 75-60z"/>
+      <!-- S America -->
+      <path fill="white" d="M420 430c30 10 50 40 48 75-3 45-25 85-45 120-12 22-35 35-55 25-22-12-28-45-22-75 8-40 30-80 50-115 5-10 14-20 24-30z"/>
+      <!-- Europe -->
+      <path fill="white" d="M740 170c35-15 70-10 95 15 20 20 25 50 15 75-12 28-40 40-70 38-35-3-60-25-65-55-4-22 8-55 25-73z"/>
+      <!-- Africa -->
+      <path fill="white" d="M760 280c40-5 75 15 95 50 22 40 25 90 10 135-12 35-45 60-80 65-40 5-75-20-90-55-18-42-10-95 15-135 18-28 30-50 50-60z"/>
+      <!-- Asia -->
+      <path fill="white" d="M880 140c70-25 150-20 210 15 55 32 90 85 95 145 4 45-15 90-50 115-40 28-95 30-140 10-50-22-85-65-95-115-10-50 5-110 20-155 8-20 30-35 60-15z"/>
+      <path fill="white" d="M1050 380c35 10 55 40 50 75-8 40-40 65-75 60-30-5-50-30-48-60 3-35 30-65 73-75z"/>
+      <!-- Australia -->
+      <path fill="white" d="M1180 480c40-10 80 5 100 40 18 30 15 70-10 90-30 24-75 20-100-5-28-28-30-70-10-100 8-12 10-20 20-25z"/>
+      <!-- UK / islands hint -->
+      <circle cx="710" cy="200" r="12" fill="white"/>
+      <circle cx="1280" cy="520" r="10" fill="white"/>
+    </mask>
+  </defs>
+  <rect width="1600" height="800" fill="#001a11"/>
+  <rect width="1600" height="800" fill="url(#glow)"/>
+  <rect width="1600" height="800" fill="url(#horizon)"/>
+  <ellipse cx="800" cy="420" rx="520" ry="280" fill="url(#dots)" mask="url(#land)" opacity="0.85"/>
+  <ellipse cx="800" cy="420" rx="520" ry="280" fill="none" stroke="#2d8f5f" stroke-opacity="0.25" stroke-width="1.5"/>
+  <ellipse cx="800" cy="420" rx="420" ry="220" fill="none" stroke="#c5a059" stroke-opacity="0.12" stroke-width="1"/>
+</svg>

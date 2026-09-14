@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+:root {
+  --ff-green: #002b1b;
+  --ff-green-deep: #001a11;
+  --ff-green-mid: #0a3a28;
+  --ff-green-soft: #0f4a34;
+  --ff-gold: #c5a059;
+  --ff-gold-light: #dbbf7a;
+  --ff-gold-dark: #9a7a3a;
+  --ff-cream: #f5f0e6;
+  --ff-off-white: #f4f1ea;
+  --ff-muted: #b9b3a8;
+  --ff-charcoal: #0b0b0b;
+  --background: var(--ff-green-deep);
+  --foreground: var(--ff-off-white);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ff-green: var(--ff-green);
+  --color-ff-green-deep: var(--ff-green-deep);
+  --color-ff-green-mid: var(--ff-green-mid);
+  --color-ff-green-soft: var(--ff-green-soft);
+  --color-ff-gold: var(--ff-gold);
+  --color-ff-gold-light: var(--ff-gold-light);
+  --color-ff-gold-dark: var(--ff-gold-dark);
+  --color-ff-cream: var(--ff-cream);
+  --color-ff-off-white: var(--ff-off-white);
+  --color-ff-muted: var(--ff-muted);
+  --color-ff-charcoal: var(--ff-charcoal);
+  --font-sans: var(--font-manrope);
+  --font-display: var(--font-outfit);
+  --font-script: var(--font-great-vibes);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ff-green-deep);
+  color: var(--ff-off-white);
+  font-family: var(--font-manrope), sans-serif;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-outfit), sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--ff-gold) 40%, transparent);
+  color: var(--ff-off-white);
+}
+
+.texture-green {
+  background-color: var(--ff-green);
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(197, 160, 89, 0.08), transparent 45%),
+    radial-gradient(ellipse at 80% 80%, rgba(15, 74, 52, 0.9), transparent 50%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 9999px;
+  background: var(--ff-gold);
+  color: var(--ff-green-deep);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.95rem 1.7rem;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.btn-gold:hover {
+  background: var(--ff-gold-light);
+  box-shadow: 0 0 24px rgba(197, 160, 89, 0.28);
+  transform: translateY(-1px);
+}
+
+.btn-outline-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 9999px;
+  border: 1px solid var(--ff-gold);
+  background: transparent;
+  color: var(--ff-gold);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.55rem;
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn-outline-gold:hover {
+  background: var(--ff-gold);
+  color: var(--ff-green-deep);
+  box-shadow: 0 0 20px rgba(197, 160, 89, 0.22);
+}
+
+.section-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ff-gold);
+}
+
+.fade-up {
+  animation: fadeUp 0.9s ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.experience-card {
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.experience-card:hover {
+  border-color: var(--ff-gold-light);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  transform: translateY(-4px);
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 1px;
+  background: var(--ff-gold);
+  transition: width 0.25s ease;
+}
+
+.nav-link:hover::after,
+.nav-link[data-active="true"]::after {
+  width: 100%;
+}
