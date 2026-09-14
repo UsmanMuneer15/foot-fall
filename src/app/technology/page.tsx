@@ -69,7 +69,7 @@ export default function TechnologyPage() {
                 <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-ff-gold">
                   {card.title}
                 </h3>
-                <p className="mt-4 text-sm leading-relaxed text-ff-off-white/80">
+                <p className="mt-4 text-sm leading-relaxed text-ff-off-white/95">
                   {card.copy}
                 </p>
               </article>

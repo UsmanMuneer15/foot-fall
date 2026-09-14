@@ -66,7 +66,7 @@ export function ProofSection() {
             <span className="block">Real Results.</span>
           </h2>
           <div className="mx-auto mt-4 h-px w-14 bg-ff-gold/80 sm:mx-0" aria-hidden />
-          <p className="mt-5 max-w-md text-sm font-light leading-relaxed text-white/90 sm:mt-6 sm:text-[0.95rem] mx-auto sm:mx-0">
+          <p className="mt-5 max-w-md text-sm font-normal leading-relaxed text-white sm:mt-6 sm:text-[0.95rem] mx-auto sm:mx-0">
             FOOTFALL GLOBAL&apos;s first major Abu Dhabi activation at ADIHEX
             2026 demonstrated the model in practice. An approximately 4m × 4m
             Giant Claw activation created a visible attraction, generated queues

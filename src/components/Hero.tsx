@@ -17,12 +17,12 @@ export function Hero() {
 
       <div className="relative mx-auto flex min-h-[100svh] max-w-[1440px] flex-col justify-end px-4 pb-12 pt-24 sm:px-8 sm:pb-20 sm:pt-28 lg:justify-center lg:px-12 lg:pb-24 xl:px-16">
         <div className="fade-up max-w-3xl">
-          <h1 className="font-display text-[1.85rem] font-medium uppercase leading-[1.02] tracking-[0.06em] text-ff-gold sm:text-5xl sm:leading-[0.95] sm:tracking-[0.08em] md:text-6xl lg:text-[4.5rem] xl:text-[5rem]">
+          <h1 className="font-display text-[1.85rem] font-semibold uppercase leading-[1.02] tracking-[0.05em] text-ff-gold sm:text-5xl sm:leading-[0.95] sm:tracking-[0.06em] md:text-6xl lg:text-[4.5rem] xl:text-[5rem]">
             <span className="block">Turning</span>
             <span className="block">Spaces Into</span>
             <span className="block">Destinations.</span>
           </h1>
-          <p className="mt-4 max-w-lg text-[0.88rem] font-light leading-relaxed text-white/90 sm:mt-6 sm:text-[0.95rem] sm:text-base">
+          <p className="mt-4 max-w-lg text-[0.95rem] font-normal leading-relaxed text-white sm:mt-6 sm:text-base">
             We create experiences that attract people, inspire participation and
             turn ordinary spaces into places people want to be.
           </p>

@@ -39,7 +39,7 @@ export default function CaseStudiesPage() {
               <h2 className="mt-3 font-display text-3xl text-ff-gold sm:text-4xl">
                 4,700+ Registered Visitors
               </h2>
-              <p className="mt-4 text-sm leading-relaxed text-ff-off-white/85">
+              <p className="mt-4 text-sm leading-relaxed text-ff-off-white">
                 FOOTFALL GLOBAL&apos;s first major Abu Dhabi activation at ADIHEX
                 2026 — an approximately 4m × 4m Giant Claw creating a visible
                 attraction, generating queues and encouraging participation with

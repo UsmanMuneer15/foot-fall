@@ -11,7 +11,7 @@ export function ExperiencesSection() {
           <h2 className="font-display text-3xl font-bold uppercase tracking-[0.06em] text-ff-gold sm:text-4xl">
             Don&apos;t Wait for the Crowd. Create It.
           </h2>
-          <p className="mt-5 max-w-md text-sm font-light leading-relaxed text-white/80">
+          <p className="mt-5 max-w-md text-sm font-normal leading-relaxed text-white/92">
             Products live inside experience categories, not as an unstructured
             rental list. The idea is the product. The equipment enables the
             idea. The audience experience proves the value.
@@ -45,7 +45,7 @@ export function ExperiencesSection() {
                   </h3>
                   <IconArrowCircle className="h-8 w-8 shrink-0 text-ff-gold transition-transform group-hover:translate-x-0.5" />
                 </div>
-                <p className="text-sm font-light leading-relaxed text-white/75">
+                <p className="text-sm font-normal leading-relaxed text-white">
                   {experience.description}
                 </p>
               </div>

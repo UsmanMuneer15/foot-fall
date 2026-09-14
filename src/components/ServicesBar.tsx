@@ -19,7 +19,7 @@ export function ServicesBar() {
               ].join(" ")}
             >
               <Icon className="h-11 w-11 text-ff-gold" />
-              <p className="max-w-[10.5rem] text-[0.62rem] font-medium uppercase leading-[1.25] tracking-[0.16em] text-white">
+              <p className="max-w-[10.5rem] text-[0.68rem] font-semibold uppercase leading-[1.3] tracking-[0.12em] text-white">
                 <span className="block">{service.line1}</span>
                 <span className="block">{service.line2}</span>
               </p>

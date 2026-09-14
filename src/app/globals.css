@@ -5,12 +5,12 @@
   --ff-green-deep: #001a11;
   --ff-green-mid: #0a3a28;
   --ff-green-soft: #0f4a34;
-  --ff-gold: #c5a059;
-  --ff-gold-light: #dbbf7a;
-  --ff-gold-dark: #9a7a3a;
-  --ff-cream: #f5f0e6;
-  --ff-off-white: #f4f1ea;
-  --ff-muted: #b9b3a8;
+  --ff-gold: #d4af6a;
+  --ff-gold-light: #e4c78a;
+  --ff-gold-dark: #a8843f;
+  --ff-cream: #f7f3ea;
+  --ff-off-white: #f7f4ef;
+  --ff-muted: #cfc8bc;
   --ff-charcoal: #0b0b0b;
   --background: var(--ff-green-deep);
   --foreground: var(--ff-off-white);
@@ -47,6 +47,13 @@ body {
   background: var(--ff-green-deep);
   color: var(--ff-off-white);
   font-family: var(--font-manrope), sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
@@ -55,6 +62,14 @@ h2,
 h3,
 h4 {
   font-family: var(--font-outfit), sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  color: var(--ff-gold);
+}
+
+p {
+  color: var(--ff-off-white);
 }
 
 ::selection {
@@ -79,9 +94,9 @@ h4 {
   background: var(--ff-gold);
   color: var(--ff-green-deep);
   font-family: var(--font-sans), sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0.95rem 1.7rem;
   transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
@@ -103,9 +118,9 @@ h4 {
   background: transparent;
   color: var(--ff-gold);
   font-family: var(--font-sans), sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0.9rem 1.55rem;
   transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
@@ -118,8 +133,9 @@ h4 {
 }
 
 .section-label {
-  font-size: 0.68rem;
-  letter-spacing: 0.28em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ff-gold);
 }

@@ -25,7 +25,7 @@ export function ProcessSection() {
             >
               {index < processSteps.length - 1 ? (
                 <span
-                  className="absolute -right-0.5 top-4 hidden text-lg font-light text-ff-gold/55 lg:block"
+                  className="absolute -right-0.5 top-4 hidden text-lg font-normal text-ff-gold/55 lg:block"
                   aria-hidden
                 >
                   ›
@@ -39,7 +39,7 @@ export function ProcessSection() {
                   {step.title}
                 </h3>
               </div>
-              <p className="mx-auto mt-1.5 max-w-[18rem] text-[0.85rem] font-light leading-relaxed text-white/80 sm:mt-3 sm:max-w-none sm:text-sm lg:mx-auto lg:max-w-[12rem]">
+              <p className="mx-auto mt-1.5 max-w-[18rem] text-[0.85rem] font-normal leading-relaxed text-white/92 sm:mt-3 sm:max-w-none sm:text-sm lg:mx-auto lg:max-w-[12rem]">
                 {step.copy}
               </p>
             </li>

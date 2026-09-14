@@ -66,7 +66,7 @@ export default function AdihexCaseStudyPage() {
                 <h2 className="text-xs font-semibold uppercase tracking-[0.22em] text-ff-gold">
                   {section.title}
                 </h2>
-                <p className="mt-3 text-sm leading-relaxed text-ff-off-white/85">
+                <p className="mt-3 text-sm leading-relaxed text-ff-off-white">
                   {section.body}
                 </p>
               </article>

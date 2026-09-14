@@ -32,7 +32,7 @@ export function ContactForm() {
         <h2 className="font-display text-3xl text-ff-gold">
           Thank you
         </h2>
-        <p className="mt-4 text-sm text-ff-off-white/85">
+        <p className="mt-4 text-sm text-ff-off-white">
           Your activation brief has been received. The FOOTFALL team will be in
           touch shortly.
         </p>

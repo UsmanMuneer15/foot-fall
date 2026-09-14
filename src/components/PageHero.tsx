@@ -58,11 +58,11 @@ export function PageHero({
 
       <div className="relative mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
         {eyebrow ? <p className="section-label mb-4">{eyebrow}</p> : null}
-        <h1 className="max-w-5xl font-display text-[2.75rem] font-medium uppercase leading-[0.95] tracking-[0.08em] text-ff-gold sm:text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5rem]">
+        <h1 className="max-w-5xl font-display text-[2.75rem] font-semibold uppercase leading-[0.95] tracking-[0.06em] text-ff-gold sm:text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5rem]">
           {title}
         </h1>
         {description ? (
-          <p className="mt-6 max-w-2xl text-sm font-light leading-relaxed text-white/90 sm:text-base">
+          <p className="mt-6 max-w-2xl text-base font-normal leading-relaxed text-white sm:text-lg">
             {description}
           </p>
         ) : null}

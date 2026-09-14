@@ -33,7 +33,7 @@ export function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
         scrolled || open
-          ? "border-b border-ff-gold/20 bg-ff-green-deep/95 backdrop-blur-md"
+          ? "bg-ff-green-deep/95 backdrop-blur-md"
           : "bg-transparent"
       }`}
     >
@@ -54,8 +54,8 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 data-active={active}
-                className={`nav-link text-[0.65rem] font-medium uppercase tracking-[0.22em] transition-colors ${
-                  active ? "text-ff-gold" : "text-ff-gold/85 hover:text-ff-gold"
+                className={`nav-link text-[0.7rem] font-semibold uppercase tracking-[0.18em] transition-colors ${
+                  active ? "text-ff-gold" : "text-ff-gold hover:text-ff-gold-light"
                 }`}
               >
                 {link.label}
