@@ -41,7 +41,7 @@ export function Header() {
         <Logo />
 
         <nav
-          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-5 xl:gap-7 lg:flex"
+          className="absolute left-1/2 hidden max-w-[min(52vw,40rem)] -translate-x-1/2 items-center gap-3 xl:max-w-none xl:gap-7 lg:flex lg:gap-4"
           aria-label="Primary"
         >
           {navLinks.map((link) => {
@@ -54,8 +54,10 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 data-active={active}
-                className={`nav-link text-[0.7rem] font-semibold uppercase tracking-[0.18em] transition-colors ${
-                  active ? "text-ff-gold" : "text-ff-gold hover:text-ff-gold-light"
+                className={`nav-link whitespace-nowrap text-[0.62rem] font-medium uppercase tracking-[0.14em] transition-colors xl:text-[0.68rem] xl:tracking-[0.18em] ${
+                  active
+                    ? "text-ff-gold"
+                    : "text-white/90 hover:text-white"
                 }`}
               >
                 {link.label}
@@ -113,15 +115,23 @@ export function Header() {
         }`}
       >
         <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6" aria-label="Mobile">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="rounded-md px-2 py-3 text-sm uppercase tracking-[0.2em] text-ff-gold"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const active =
+              link.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`rounded-md px-2 py-3 text-sm uppercase tracking-[0.2em] ${
+                  active ? "text-ff-gold" : "text-white hover:text-ff-gold"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
           <Link href="/contact" className="btn-gold mt-3 w-full">
             Create an Activation →
           </Link>

@@ -58,15 +58,15 @@ export function ProofSection() {
   }, []);
 
   return (
-    <section ref={ref} className="relative overflow-hidden py-12 sm:py-20 lg:py-24">
-      <div className="relative mx-auto grid max-w-[1440px] gap-10 px-4 sm:gap-12 sm:px-8 lg:grid-cols-[1.05fr_0.95fr_1fr] lg:items-center lg:gap-8 lg:px-12 xl:gap-10">
+    <section ref={ref} className="relative overflow-hidden pb-6 pt-10 sm:pb-8 sm:pt-14 lg:pb-10 lg:pt-16">
+      <div className="relative mx-auto grid max-w-[1440px] gap-8 px-4 sm:gap-10 sm:px-8 lg:grid-cols-[1.05fr_0.95fr_1fr] lg:items-center lg:gap-6 lg:px-12 xl:gap-8">
         <div className="text-center sm:text-left">
-          <h2 className="font-display text-[1.65rem] font-bold uppercase leading-[1.05] tracking-[0.06em] text-ff-gold sm:text-3xl md:text-4xl">
+          <h2 className="ff-heading text-[1.55rem] tracking-[0.1em] sm:text-[1.85rem] md:text-[2.15rem] lg:text-[2.35rem]">
             <span className="block">Real People.</span>
             <span className="block">Real Results.</span>
           </h2>
-          <div className="mx-auto mt-4 h-px w-14 bg-ff-gold/80 sm:mx-0" aria-hidden />
-          <p className="mt-5 max-w-md text-sm font-normal leading-relaxed text-white sm:mt-6 sm:text-[0.95rem] mx-auto sm:mx-0">
+          <div className="mx-auto mt-3.5 h-px w-12 bg-ff-gold sm:mx-0 sm:mt-4 sm:w-14" aria-hidden />
+          <p className="mx-auto mt-5 max-w-md text-[0.9rem] font-normal leading-[1.7] text-white sm:mx-0 sm:mt-5 sm:text-[0.95rem]">
             FOOTFALL GLOBAL&apos;s first major Abu Dhabi activation at ADIHEX
             2026 demonstrated the model in practice. An approximately 4m × 4m
             Giant Claw activation created a visible attraction, generated queues
@@ -76,20 +76,20 @@ export function ProofSection() {
           </p>
           <Link
             href="/case-studies/adihex-2026"
-            className="btn-outline-gold mt-7 inline-flex sm:mt-8"
+            className="btn-outline-gold mt-6 inline-flex sm:mt-7"
           >
             View Case Study
           </Link>
         </div>
 
         <div className="text-center">
-          <p className="font-display text-5xl font-extrabold leading-none tracking-tight text-ff-gold sm:text-7xl lg:text-[5.5rem]">
+          <p className="font-[family-name:var(--font-montserrat)] text-[3.75rem] font-semibold leading-none tracking-tight text-ff-gold sm:text-[5.25rem] lg:text-[5.75rem]">
             {count.toLocaleString()}+
           </p>
-          <p className="mt-3 text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-ff-gold sm:text-xs">
+          <p className="mt-2.5 font-[family-name:var(--font-montserrat)] text-[0.62rem] font-semibold uppercase tracking-[0.28em] text-ff-gold sm:mt-3 sm:text-[0.7rem]">
             Registered Visitors
           </p>
-          <div className="mx-auto mt-8 flex max-w-md items-stretch justify-center sm:mt-10">
+          <div className="mx-auto mt-7 flex max-w-md items-stretch justify-center sm:mt-8">
             {proofPoints.map((point, index) => {
               const Icon = proofIcons[index];
               return (
@@ -103,7 +103,7 @@ export function ProofSection() {
                   ].join(" ")}
                 >
                   <Icon className="h-7 w-7 text-ff-gold sm:h-8 sm:w-8" />
-                  <p className="max-w-[5.5rem] text-center text-[0.48rem] font-medium uppercase leading-snug tracking-[0.1em] text-ff-gold sm:text-[0.52rem] sm:tracking-[0.12em]">
+                  <p className="max-w-[5.75rem] text-center font-[family-name:var(--font-montserrat)] text-[0.48rem] font-medium uppercase leading-snug tracking-[0.12em] text-ff-gold sm:text-[0.52rem] sm:tracking-[0.14em]">
                     {point}
                   </p>
                 </div>
@@ -112,7 +112,7 @@ export function ProofSection() {
           </div>
         </div>
 
-        <div className="relative min-h-[280px] overflow-hidden sm:min-h-[420px]">
+        <div className="relative min-h-[260px] overflow-hidden sm:min-h-[400px] lg:min-h-[440px]">
           <Image
             src="/images/proof-dog.png"
             alt="Experiences for a better tomorrow"
@@ -121,7 +121,7 @@ export function ProofSection() {
             sizes="(max-width: 1024px) 100vw, 33vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ff-green-deep/70 via-transparent to-transparent" />
-          <p className="absolute bottom-8 right-4 max-w-[12rem] rotate-[-8deg] font-[family-name:var(--font-great-vibes)] text-2xl leading-tight text-white sm:bottom-10 sm:right-6 sm:text-[2.1rem]">
+          <p className="absolute bottom-7 right-4 max-w-[11.5rem] rotate-[-8deg] font-[family-name:var(--font-great-vibes)] text-[1.65rem] leading-tight text-ff-gold sm:bottom-9 sm:right-5 sm:max-w-[13rem] sm:text-[2rem]">
             Experiences For A Better Tomorrow
           </p>
         </div>

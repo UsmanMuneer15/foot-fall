@@ -101,7 +101,7 @@ export default function ExperiencesPage() {
               <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-ff-gold">
                 {category.title}
               </h2>
-              <p className="mt-4 text-sm leading-relaxed text-ff-off-white/95">
+              <p className="mt-4 text-sm leading-relaxed text-white">
                 {category.items}
               </p>
             </article>
@@ -130,14 +130,14 @@ export default function ExperiencesPage() {
               </div>
               <div>
                 <p className="section-label">{item.subheading}</p>
-                <h2 className="mt-3 font-display text-3xl text-ff-gold sm:text-4xl">
+                <h2 className="mt-3 ff-heading ff-heading-md sm:text-4xl">
                   {item.headline}
                 </h2>
-                <p className="mt-5 text-sm leading-relaxed text-ff-off-white">
+                <p className="mt-5 text-sm leading-relaxed text-white">
                   {item.body}
                 </p>
                 {item.customisation ? (
-                  <p className="mt-4 text-sm leading-relaxed text-ff-off-white">
+                  <p className="mt-4 text-sm leading-relaxed text-white">
                     {item.customisation}
                   </p>
                 ) : null}

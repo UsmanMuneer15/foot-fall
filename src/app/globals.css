@@ -1,19 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 :root {
-  --ff-green: #002b1b;
-  --ff-green-deep: #001a11;
+  --ff-green: #002117;
+  --ff-green-deep: #00150f;
   --ff-green-mid: #0a3a28;
   --ff-green-soft: #0f4a34;
-  --ff-gold: #d4af6a;
-  --ff-gold-light: #e4c78a;
-  --ff-gold-dark: #a8843f;
-  --ff-cream: #f7f3ea;
-  --ff-off-white: #f7f4ef;
+  --ff-gold: #c5a059;
+  --ff-gold-light: #d4b36e;
+  --ff-gold-dark: #9a7a3a;
+  --ff-cream: #f5f0e6;
+  --ff-off-white: #ffffff;
   --ff-muted: #cfc8bc;
   --ff-charcoal: #0b0b0b;
   --background: var(--ff-green-deep);
-  --foreground: var(--ff-off-white);
+  --foreground: #ffffff;
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-great-vibes: "Great Vibes", cursive;
 }
 
 @theme inline {
@@ -30,8 +33,8 @@
   --color-ff-off-white: var(--ff-off-white);
   --color-ff-muted: var(--ff-muted);
   --color-ff-charcoal: var(--ff-charcoal);
-  --font-sans: var(--font-manrope);
-  --font-display: var(--font-outfit);
+  --font-sans: var(--font-montserrat);
+  --font-display: var(--font-montserrat);
   --font-script: var(--font-great-vibes);
 }
 
@@ -45,8 +48,8 @@ html {
 
 body {
   background: var(--ff-green-deep);
-  color: var(--ff-off-white);
-  font-family: var(--font-manrope), sans-serif;
+  color: #ffffff;
+  font-family: var(--font-montserrat), sans-serif;
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.65;
@@ -61,20 +64,41 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-outfit), sans-serif;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  line-height: 1.15;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.08;
+  text-transform: uppercase;
   color: var(--ff-gold);
 }
 
+/* Primary display headings — match homepage hero style */
+.ff-heading {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.08;
+  color: var(--ff-gold);
+}
+
+.ff-heading-lg {
+  font-size: clamp(1.85rem, 4.2vw, 4.5rem);
+}
+
+.ff-heading-md {
+  font-size: clamp(1.65rem, 3vw, 2.75rem);
+}
+
 p {
-  color: var(--ff-off-white);
+  color: #ffffff;
+  font-weight: 400;
+  line-height: 1.65;
 }
 
 ::selection {
   background: color-mix(in srgb, var(--ff-gold) 40%, transparent);
-  color: var(--ff-off-white);
+  color: #ffffff;
 }
 
 .texture-green {
@@ -93,10 +117,10 @@ p {
   border-radius: 9999px;
   background: var(--ff-gold);
   color: var(--ff-green-deep);
-  font-family: var(--font-sans), sans-serif;
-  font-size: 0.72rem;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 0.95rem 1.7rem;
   transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
@@ -116,11 +140,11 @@ p {
   border-radius: 9999px;
   border: 1px solid var(--ff-gold);
   background: transparent;
-  color: var(--ff-gold);
-  font-family: var(--font-sans), sans-serif;
-  font-size: 0.72rem;
+  color: #ffffff;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 0.9rem 1.55rem;
   transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
@@ -133,9 +157,10 @@ p {
 }
 
 .section-label {
-  font-size: 0.72rem;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ff-gold);
 }
@@ -167,6 +192,10 @@ p {
 
 .nav-link {
   position: relative;
+}
+
+.nav-link[data-active="true"] {
+  color: var(--ff-gold);
 }
 
 .nav-link::after {

@@ -22,10 +22,10 @@ export function Logo({ className = "" }: LogoProps) {
         priority
       />
       <span className="flex min-w-0 flex-col justify-center leading-none">
-        <span className="font-display text-[0.95rem] font-medium uppercase tracking-[0.14em] text-ff-gold sm:text-[1.35rem] sm:tracking-[0.18em] md:text-[1.55rem]">
+        <span className="font-display text-[0.95rem] font-medium uppercase tracking-[0.16em] text-ff-gold sm:text-[1.35rem] sm:tracking-[0.2em] md:text-[1.55rem]">
           FOOTFALL
         </span>
-        <span className="mt-1 text-[0.48rem] font-medium uppercase tracking-[0.28em] text-ff-gold sm:mt-1.5 sm:text-[0.58rem] sm:tracking-[0.36em] md:text-[0.65rem]">
+        <span className="mt-1 text-[0.48rem] font-medium uppercase tracking-[0.3em] text-ff-gold sm:mt-1.5 sm:text-[0.58rem] sm:tracking-[0.38em] md:text-[0.65rem]">
           GLOBAL LLC
         </span>
       </span>

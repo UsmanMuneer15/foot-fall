@@ -44,7 +44,7 @@ export default function NewsPage() {
               className="block border border-ff-gold/25 bg-ff-green/40 p-6 transition-colors hover:border-ff-gold/50 sm:p-8"
             >
               <p className="section-label">{story.tag}</p>
-              <h2 className="mt-3 max-w-4xl font-display text-2xl text-ff-gold sm:text-3xl">
+              <h2 className="mt-3 max-w-4xl ff-heading text-2xl sm:text-3xl">
                 {story.title}
               </h2>
               <span className="mt-5 inline-block text-xs uppercase tracking-[0.2em] text-ff-gold">

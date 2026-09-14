@@ -21,28 +21,28 @@ export default function AboutPage() {
       <section className="bg-ff-green-deep py-16 sm:py-20">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div>
-            <h2 className="font-display text-3xl text-ff-gold sm:text-4xl">
+            <h2 className="ff-heading ff-heading-md sm:text-4xl">
               Amal El Houm
             </h2>
             <p className="mt-2 text-xs uppercase tracking-[0.22em] text-ff-gold/90">
               Proprietor, FOOTFALL GLOBAL LLC
             </p>
-            <p className="mt-6 text-sm leading-relaxed text-ff-off-white sm:text-[0.95rem]">
+            <p className="mt-6 text-sm leading-relaxed text-white sm:text-[0.95rem]">
               FOOTFALL GLOBAL is built around a simple belief: people remember
               experiences longer than they remember advertisements.
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-ff-off-white sm:text-[0.95rem]">
+            <p className="mt-4 text-sm leading-relaxed text-white sm:text-[0.95rem]">
               Amal El Houm&apos;s vision is to create a different approach to
               audience engagement — one where brands move beyond direct selling
               and instead create experiences people genuinely want to approach,
               participate in and share.
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-ff-off-white sm:text-[0.95rem]">
+            <p className="mt-4 text-sm leading-relaxed text-white sm:text-[0.95rem]">
               Through creativity, technology and physical activations, FOOTFALL
               GLOBAL aims to transform ordinary event spaces into destinations
               and passing audiences into engaged communities.
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-ff-off-white sm:text-[0.95rem]">
+            <p className="mt-4 text-sm leading-relaxed text-white sm:text-[0.95rem]">
               The objective is not simply to put a brand in front of people. It
               is to give people a reason to come to the brand.
             </p>
@@ -50,17 +50,17 @@ export default function AboutPage() {
 
           <div className="border border-ff-gold/30 bg-ff-green p-8 sm:p-10">
             <p className="section-label">Positioning</p>
-            <h3 className="mt-4 font-display text-2xl text-ff-gold sm:text-3xl">
+            <h3 className="mt-4 ff-heading text-2xl sm:text-3xl">
               Experience instead of direct selling.
             </h3>
-            <p className="mt-5 text-sm leading-relaxed text-ff-off-white">
+            <p className="mt-5 text-sm leading-relaxed text-white">
               FOOTFALL GLOBAL exists to create a reason for people to approach a
               particular place, brand, stand, venue or event zone. The company
               develops experiences that attract attention, encourage
               participation and create a memorable connection between the
               audience and the brand.
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-ff-off-white">
+            <p className="mt-4 text-sm leading-relaxed text-white">
               The positioning is not: an event-equipment rental company that
               also creates activations. The positioning is: an experiential
               engagement company that controls the concepts, technology,

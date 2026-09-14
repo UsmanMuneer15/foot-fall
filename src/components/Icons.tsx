@@ -4,16 +4,16 @@ export function IconLightbulb({ className }: IconProps) {
   return (
     <svg viewBox="0 0 48 48" fill="none" className={className} aria-hidden>
       <path
-        d="M24 8c-6.6 0-12 5-12 11.2 0 4.2 2.2 7.8 5.6 9.8V34h12.8v-4.999c3.4-2 5.6-5.6 5.6-9.8C36 13 30.6 8 24 8Z"
+        d="M24 9c-6.1 0-11 4.6-11 10.4 0 3.9 2.1 7.2 5.2 9.1V33h11.6v-4.5c3.1-1.9 5.2-5.2 5.2-9.1C35 13.6 30.1 9 24 9Z"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.25"
         strokeLinejoin="round"
       />
-      <path d="M20 38h8M21.5 42h5" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+      <path d="M20.5 37h7M22 41h4" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
       <path
-        d="M24 3v3M38 15l-2.5 1.5M10 15l2.5 1.5M35.5 27.5l2.2 1.8M12.5 27.5l-2.2 1.8"
+        d="M24 4.5v2.8M37.5 15.5l-2.3 1.4M10.5 15.5l2.3 1.4M35.2 28l2 1.7M12.8 28l-2 1.7"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.25"
         strokeLinecap="round"
       />
     </svg>
@@ -23,9 +23,9 @@ export function IconLightbulb({ className }: IconProps) {
 export function IconPhone({ className }: IconProps) {
   return (
     <svg viewBox="0 0 48 48" fill="none" className={className} aria-hidden>
-      <rect x="13" y="8" width="22" height="32" rx="2.5" stroke="currentColor" strokeWidth="1.35" />
-      <path d="M21 35h6" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
-      <path d="M17 12h14" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" opacity="0.55" />
+      <rect x="14" y="8" width="20" height="32" rx="2.2" stroke="currentColor" strokeWidth="1.25" />
+      <path d="M21.5 34.5h5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
+      <path d="M18 12h12" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
     </svg>
   );
 }
@@ -33,17 +33,17 @@ export function IconPhone({ className }: IconProps) {
 export function IconGear({ className }: IconProps) {
   return (
     <svg viewBox="0 0 48 48" fill="none" className={className} aria-hidden>
-      <circle cx="24" cy="24" r="5.5" stroke="currentColor" strokeWidth="1.35" />
+      <circle cx="24" cy="24" r="5" stroke="currentColor" strokeWidth="1.25" />
       <path
-        d="M24 9.5v3.2M24 35.3v3.2M9.5 24h3.2M35.3 24h3.2M14.1 14.1l2.3 2.3M31.6 31.6l2.3 2.3M33.9 14.1l-2.3 2.3M16.4 31.6l-2.3 2.3"
+        d="M24 10v2.8M24 35.2V38M10 24h2.8M35.2 24H38M14.5 14.5l2 2M31.5 31.5l2 2M33.5 14.5l-2 2M16.5 31.5l-2 2"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.25"
         strokeLinecap="round"
       />
       <path
-        d="M19.2 11.2l1.2 3M27.6 11.2l-1.2 3M36.8 19.2l-3 1.2M36.8 28.8l-3-1.2M28.8 36.8l-1.2-3M19.2 36.8l1.2-3M11.2 28.8l3-1.2M11.2 19.2l3 1.2"
+        d="M19.5 11.8l1 2.6M28.5 11.8l-1 2.6M36.2 19.5l-2.6 1M36.2 28.5l-2.6-1M28.5 36.2l-1-2.6M19.5 36.2l1-2.6M11.8 28.5l2.6-1M11.8 19.5l2.6 1"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.25"
         strokeLinecap="round"
       />
     </svg>
@@ -53,25 +53,25 @@ export function IconGear({ className }: IconProps) {
 export function IconCrowd({ className }: IconProps) {
   return (
     <svg viewBox="0 0 48 48" fill="none" className={className} aria-hidden>
-      <circle cx="15" cy="15" r="3.8" stroke="currentColor" strokeWidth="1.35" />
-      <circle cx="33" cy="15" r="3.8" stroke="currentColor" strokeWidth="1.35" />
-      <circle cx="24" cy="18" r="4.4" stroke="currentColor" strokeWidth="1.35" />
+      <circle cx="14.5" cy="15" r="3.5" stroke="currentColor" strokeWidth="1.25" />
+      <circle cx="33.5" cy="15" r="3.5" stroke="currentColor" strokeWidth="1.25" />
+      <circle cx="24" cy="17.5" r="4" stroke="currentColor" strokeWidth="1.25" />
       <path
-        d="M8.5 35.5c1.2-5.2 4.2-8 6.5-8s5.2 2.5 6.5 7.2"
+        d="M8.5 35c1.1-4.8 3.8-7.5 6-7.5s4.8 2.3 6 6.5"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.25"
         strokeLinecap="round"
       />
       <path
-        d="M26.5 34.7c1.3-4.7 4.2-7.2 6.5-7.2s5.3 2.8 6.5 8"
+        d="M27.5 34c1.2-4.2 3.8-6.5 6-6.5s4.9 2.7 6 7.5"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.25"
         strokeLinecap="round"
       />
       <path
-        d="M15.5 36c1.6-5.5 4.8-8.5 8.5-8.5s6.9 3 8.5 8.5"
+        d="M15.5 35.5c1.5-5 4.4-8 8.5-8s7 3 8.5 8"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.25"
         strokeLinecap="round"
       />
     </svg>
@@ -82,18 +82,23 @@ export function IconChair({ className }: IconProps) {
   return (
     <svg viewBox="0 0 48 48" fill="none" className={className} aria-hidden>
       <path
-        d="M14 12c0-1.5 1.2-2.5 3-2.5h14c1.8 0 3 1 3 2.5v11H14V12Z"
+        d="M15 11.5c0-1.4 1.1-2.3 2.8-2.3h12.4c1.7 0 2.8.9 2.8 2.3V22H15V11.5Z"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.25"
         strokeLinejoin="round"
       />
       <path
-        d="M12 23h24v5c0 1.2-1 2.2-2.2 2.2H14.2C13 30.2 12 29.2 12 28v-5Z"
+        d="M13 22h22v4.5c0 1.1-.9 2-2 2H15c-1.1 0-2-.9-2-2V22Z"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.25"
         strokeLinejoin="round"
       />
-      <path d="M16 30.2V39M32 30.2V39M13 39h6M29 39h6" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+      <path
+        d="M16.5 28.5V38M31.5 28.5V38M13.5 38h6M28.5 38h6"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -101,24 +106,24 @@ export function IconChair({ className }: IconProps) {
 export function IconConsult({ className }: IconProps) {
   return (
     <svg viewBox="0 0 48 48" fill="none" className={className} aria-hidden>
-      <circle cx="24" cy="18" r="5" stroke="currentColor" strokeWidth="1.35" />
+      <circle cx="24" cy="18" r="4.8" stroke="currentColor" strokeWidth="1.25" />
       <path
-        d="M15 18.5c0-2.2 1.3-4 3.2-4.8"
+        d="M16 18.2c0-2 1.2-3.7 3-4.4"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.25"
         strokeLinecap="round"
       />
       <path
-        d="M18 13.2c1.2-1.8 3.3-2.8 5.5-2.8 1.8 0 3.4.7 4.6 1.8"
+        d="M18.5 13.5c1.1-1.6 3-2.5 5.1-2.5 1.7 0 3.2.6 4.3 1.6"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.25"
         strokeLinecap="round"
       />
-      <path d="M20.5 10.8h7" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+      <path d="M20.8 11h6.4" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
       <path
-        d="M13.5 37c1.8-6.2 5.6-9.5 10.5-9.5S35.7 30.8 37.5 37"
+        d="M14 36.5c1.7-5.8 5.2-9 10-9s8.3 3.2 10 9"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.25"
         strokeLinecap="round"
       />
     </svg>

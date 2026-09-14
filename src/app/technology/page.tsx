@@ -29,7 +29,7 @@ export default function TechnologyPage() {
 
       <section className="bg-ff-green-deep py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-3xl text-ff-gold sm:text-4xl">
+          <h2 className="ff-heading ff-heading-md sm:text-4xl">
             From visitor to lasting connection
           </h2>
           <div className="mt-10 flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center">
@@ -69,7 +69,7 @@ export default function TechnologyPage() {
                 <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-ff-gold">
                   {card.title}
                 </h3>
-                <p className="mt-4 text-sm leading-relaxed text-ff-off-white/95">
+                <p className="mt-4 text-sm leading-relaxed text-white">
                   {card.copy}
                 </p>
               </article>
