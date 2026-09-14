@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const journey = [
   "Visitor",
-  "QR / Tablet / Touchscreen",
+  "QR / Touchscreen",
   "Registration",
   "Participation",
   "Audience Data",
@@ -32,14 +32,20 @@ export default function TechnologyPage() {
           <h2 className="ff-heading ff-heading-md sm:text-4xl">
             From visitor to lasting connection
           </h2>
-          <div className="mt-10 flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center">
+          <div className="mt-10 flex flex-col gap-3 lg:flex-row lg:flex-nowrap lg:items-center lg:justify-between lg:gap-1.5 xl:gap-2">
             {journey.map((step, index) => (
-              <div key={step} className="flex items-center gap-3">
-                <div className="border border-ff-gold/40 px-4 py-3 text-xs uppercase tracking-[0.16em] text-ff-gold">
+              <div
+                key={step}
+                className="flex min-w-0 items-center gap-1.5 lg:flex-1 xl:gap-2"
+              >
+                <div className="w-full border border-ff-gold/40 px-3 py-2.5 text-center text-[0.58rem] uppercase leading-snug tracking-[0.12em] text-ff-gold sm:px-4 sm:py-3 sm:text-xs sm:tracking-[0.16em] lg:px-2 lg:py-2.5 lg:text-[0.55rem] lg:tracking-[0.1em] xl:px-3 xl:text-[0.62rem] xl:tracking-[0.14em]">
                   {step}
                 </div>
                 {index < journey.length - 1 ? (
-                  <span className="hidden text-ff-gold/50 md:inline" aria-hidden>
+                  <span
+                    className="hidden shrink-0 text-ff-gold/50 lg:inline"
+                    aria-hidden
+                  >
                     →
                   </span>
                 ) : null}

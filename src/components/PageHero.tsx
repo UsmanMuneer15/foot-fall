@@ -41,9 +41,9 @@ export function PageHero({
               sizes="100vw"
             />
           )}
-          <div className="absolute inset-0 bg-ff-green-deep/78" />
-          <div className="absolute inset-0 bg-gradient-to-r from-ff-green-deep/90 via-ff-green-deep/70 to-ff-green-deep/45" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ff-green-deep/80 via-transparent to-ff-green-deep/40" />
+          <div className="absolute inset-0 bg-ff-green-deep/48" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ff-green-deep/78 via-ff-green-deep/45 to-ff-green-deep/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ff-green-deep/55 via-transparent to-ff-green-deep/25" />
         </>
       ) : (
         <>
