@@ -5,7 +5,6 @@ Website for FOOTFALL GLOBAL LLC — Turning Spaces Into Destinations.
 ## Project
 
 - `web/` — Next.js site
-- `_docs/` — brand / developer reference materials
 
 ## Local development
 
