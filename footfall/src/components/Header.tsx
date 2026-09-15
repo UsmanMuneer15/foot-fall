@@ -38,7 +38,7 @@ export function Header() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-4 py-3 sm:gap-5 sm:px-8 sm:py-3.5 lg:gap-6 lg:px-10 xl:gap-8 xl:px-12">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-4 py-3.5 sm:gap-5 sm:px-8 sm:py-4 lg:gap-6 lg:px-10 xl:gap-8 xl:px-12">
         <Logo className="shrink-0" />
 
         <nav
