@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   productCategories,
   productsByCategory,
@@ -166,6 +167,15 @@ const iconColors = [
   "text-[#1d4ed8] bg-[#1d4ed8]/10",
 ];
 
+const mobileIconColors = [
+  "text-ff-gold bg-ff-gold/15",
+  "text-[#8fd4b8] bg-[#8fd4b8]/12",
+  "text-[#d4b36e] bg-[#d4b36e]/12",
+  "text-[#9ec5ff] bg-[#9ec5ff]/12",
+  "text-[#f0c08a] bg-[#f0c08a]/12",
+  "text-[#b8e0d0] bg-[#b8e0d0]/12",
+];
+
 function ProductItem({
   product,
   index,
@@ -214,11 +224,16 @@ export function ActivationsMenu({
   const [selectedProductId, setSelectedProductId] = useState<string | null>(
     null,
   );
+  const [mounted, setMounted] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const menuId = useId();
 
   useEffect(() => {
-    if (!menuOpen) return;
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (variant !== "desktop" || !menuOpen) return;
     function onPointer(e: MouseEvent) {
       if (!rootRef.current?.contains(e.target as Node)) {
         setMenuOpen(false);
@@ -233,66 +248,176 @@ export function ActivationsMenu({
       document.removeEventListener("mousedown", onPointer);
       document.removeEventListener("keydown", onKey);
     };
-  }, [menuOpen]);
+  }, [variant, menuOpen]);
 
   function openBooking(productId?: string) {
     setSelectedProductId(productId ?? null);
     setMenuOpen(false);
     onNavigate?.();
-    setBookingOpen(true);
+    // Open booking on next tick so the sheet can unmount cleanly first
+    window.setTimeout(() => setBookingOpen(true), 0);
   }
+
+  function openMobileSheet() {
+    onNavigate?.();
+    setMenuOpen(true);
+  }
+
+  function closeMobileSheet() {
+    setMenuOpen(false);
+  }
+
+  useEffect(() => {
+    if (variant !== "mobile" || !menuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setMenuOpen(false);
+    }
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [variant, menuOpen]);
 
   if (variant === "mobile") {
     return (
       <>
-        <div className="mt-1 border-t border-ff-gold/15 pt-2">
+        <div className="mt-3 border-t border-ff-gold/20 pt-4">
           <button
             type="button"
-            className="flex w-full items-center justify-between rounded-md px-2 py-3 text-sm uppercase tracking-[0.2em] text-ff-gold"
+            className="flex w-full items-center justify-between gap-3 rounded-full border border-ff-gold/55 bg-transparent px-4 py-3.5 text-left text-ff-gold transition hover:border-ff-gold hover:bg-ff-gold/10"
             aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((v) => !v)}
+            onClick={openMobileSheet}
           >
-            Create an Activation
-            <span aria-hidden className="text-base">
-              {menuOpen ? "−" : "+"}
+            <span className="text-[0.68rem] font-bold uppercase tracking-[0.16em]">
+              Create an Activation
+            </span>
+            <span
+              aria-hidden
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-ff-gold/40 text-sm"
+            >
+              →
             </span>
           </button>
-          {menuOpen && (
-            <div className="max-h-[55vh] space-y-4 overflow-y-auto px-1 pb-3">
-              {productCategories.map((cat) => (
-                <div key={cat.id}>
-                  <p className="px-2 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-ff-gold">
-                    {cat.title}
-                  </p>
-                  <div className="mt-1">
-                    {productsByCategory(cat.id).map((p) => (
-                      <button
-                        key={p.id}
-                        type="button"
-                        onClick={() => openBooking(p.id)}
-                        className="block w-full rounded-md px-2 py-2.5 text-left text-sm text-white/90 hover:bg-white/5 hover:text-ff-gold"
-                      >
-                        {p.name}
-                      </button>
-                    ))}
+        </div>
+
+        {mounted && menuOpen
+          ? createPortal(
+              <div
+                className="fixed inset-0 z-[70] lg:hidden"
+                role="dialog"
+                aria-modal="true"
+              >
+                <button
+                  type="button"
+                  className="absolute inset-0 bg-black/65 backdrop-blur-[2px]"
+                  aria-label="Close activations menu"
+                  onClick={closeMobileSheet}
+                />
+                <div className="absolute inset-x-0 bottom-0 flex max-h-[88svh] flex-col overflow-hidden rounded-t-3xl border border-ff-gold/25 bg-ff-green-deep shadow-[0_-20px_60px_rgba(0,0,0,0.45)]">
+                  <div className="flex items-center justify-between gap-3 border-b border-ff-gold/20 px-5 py-4">
+                    <div>
+                      <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-ff-gold">
+                        Footfall
+                      </p>
+                      <h2 className="mt-1 text-lg font-semibold uppercase tracking-[0.08em] text-ff-gold">
+                        Create an Activation
+                      </h2>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={closeMobileSheet}
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-ff-gold/40 text-ff-gold transition hover:border-ff-gold hover:bg-ff-gold hover:text-ff-green-deep"
+                      aria-label="Close"
+                    >
+                      ×
+                    </button>
+                  </div>
+
+                  <div className="flex-1 space-y-5 overflow-y-auto overscroll-contain px-4 py-4">
+                    {productCategories.map((cat) => {
+                      const items = productsByCategory(cat.id);
+                      return (
+                        <section key={cat.id}>
+                          <div className="mb-2.5 px-1">
+                            <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-ff-gold">
+                              {cat.title}
+                            </p>
+                            <p className="mt-1 text-[0.7rem] leading-snug text-white/55">
+                              {cat.subtitle}
+                            </p>
+                          </div>
+                          <div className="space-y-1">
+                            {items.map((product, index) => {
+                              const color =
+                                mobileIconColors[
+                                  index % mobileIconColors.length
+                                ];
+                              return (
+                                <button
+                                  key={product.id}
+                                  type="button"
+                                  onClick={() => openBooking(product.id)}
+                                  className="group flex w-full items-center gap-3 rounded-xl border border-transparent px-2 py-2.5 text-left transition active:scale-[0.99] hover:border-ff-gold/20 hover:bg-white/[0.04]"
+                                >
+                                  <span
+                                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${color}`}
+                                  >
+                                    <ProductIcon
+                                      name={product.icon}
+                                      className="h-5 w-5"
+                                    />
+                                  </span>
+                                  <span className="min-w-0 flex-1">
+                                    <span className="block text-[0.82rem] font-semibold leading-snug text-white transition group-hover:text-ff-gold">
+                                      {product.name}
+                                    </span>
+                                    <span className="mt-0.5 block text-[0.68rem] leading-snug text-white/50">
+                                      {product.description}
+                                    </span>
+                                  </span>
+                                  <span
+                                    aria-hidden
+                                    className="shrink-0 text-ff-gold/70 transition group-hover:text-ff-gold"
+                                  >
+                                    →
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </section>
+                      );
+                    })}
+                  </div>
+
+                  <div className="border-t border-ff-gold/20 bg-ff-green/80 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+                    <button
+                      type="button"
+                      className="btn-gold w-full !py-3.5"
+                      onClick={() => openBooking()}
+                    >
+                      Book an Activation →
+                    </button>
                   </div>
                 </div>
-              ))}
-              <button
-                type="button"
-                className="btn-gold mt-2 w-full"
-                onClick={() => openBooking()}
-              >
-                Book an Activation →
-              </button>
-            </div>
-          )}
-        </div>
-        <BookingModal
-          open={bookingOpen}
-          onClose={() => setBookingOpen(false)}
-          initialProductId={selectedProductId}
-        />
+              </div>,
+              document.body,
+            )
+          : null}
+
+        {mounted
+          ? createPortal(
+              <BookingModal
+                open={bookingOpen}
+                onClose={() => setBookingOpen(false)}
+                initialProductId={selectedProductId}
+              />,
+              document.body,
+            )
+          : null}
       </>
     );
   }

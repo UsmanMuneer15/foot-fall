@@ -326,12 +326,68 @@ export function BookingModal({
                   </p>
                 </div>
               </div>
+            </div>
 
+            <aside className="border-t border-ff-gold/20 bg-ff-green px-5 py-6 sm:px-8 sm:py-8 lg:border-l lg:border-t-0">
+              <p className="text-xs uppercase tracking-[0.2em] text-ff-gold">
+                Charges Panel
+              </p>
+              <h3 className="mt-2 text-base font-medium uppercase tracking-[0.08em] text-ff-gold">
+                {scope === "local" ? "UAE Local" : "International"} Estimate
+              </h3>
+
+              {!quote ? (
+                <p className="mt-6 text-sm text-white/55">
+                  Select a product to see rental and service charges.
+                </p>
+              ) : (
+                <ul className="mt-6 space-y-3 text-sm">
+                  <ChargeRow
+                    label={`Rental (${days} day${days > 1 ? "s" : ""})`}
+                    value={formatAed(quote.rental)}
+                    emphasize
+                  />
+                  <ChargeRow label="Transport" value={formatAed(quote.transport)} />
+                  <ChargeRow label="Labour" value={formatAed(quote.labor)} />
+                  <ChargeRow label="Setup" value={formatAed(quote.setup)} />
+                  <ChargeRow
+                    label="Crew (per days)"
+                    value={formatAed(quote.crew)}
+                    divider
+                  />
+                  {scope === "international" && (
+                    <>
+                      <ChargeRow label="Cargo" value={formatAed(quote.cargo)} />
+                      <ChargeRow
+                        label="Customs handling"
+                        value={formatAed(quote.customs)}
+                        divider
+                      />
+                    </>
+                  )}
+                  <ChargeRow label="Subtotal" value={formatAed(quote.subtotal)} />
+                  <ChargeRow
+                    label={`VAT (${Math.round(UAE_VAT_RATE * 100)}%)`}
+                    value={formatAed(quote.tax)}
+                  />
+                  <li className="mt-3 flex justify-between gap-4 border border-ff-gold/35 bg-ff-gold/10 px-3 py-3.5">
+                    <span className="font-semibold uppercase tracking-[0.12em] text-ff-gold">
+                      Total due
+                    </span>
+                    <span className="text-lg font-bold text-ff-gold">
+                      {formatAed(quote.total)}
+                    </span>
+                  </li>
+                </ul>
+              )}
+            </aside>
+
+            <div className="space-y-5 border-t border-ff-gold/20 px-5 py-6 sm:px-8 sm:py-8 lg:col-span-2">
               <div className="border border-ff-gold/25 bg-ff-green/30 p-4 sm:p-5">
                 <p className="text-xs uppercase tracking-[0.16em] text-ff-gold">
                   Checkout — Pay by Card
                 </p>
-                <div className="mt-4 grid gap-5 sm:grid-cols-2">
+                <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
                   <label className={labelClass}>
                     Name on Card
                     <input
@@ -405,60 +461,6 @@ export function BookingModal({
                 Pay {quote ? formatAed(quote.total) : ""} →
               </button>
             </div>
-
-            <aside className="border-t border-ff-gold/20 bg-ff-green px-5 py-6 sm:px-8 sm:py-8 lg:border-l lg:border-t-0">
-              <p className="text-xs uppercase tracking-[0.2em] text-ff-gold">
-                Charges Panel
-              </p>
-              <h3 className="mt-2 text-base font-medium uppercase tracking-[0.08em] text-ff-gold">
-                {scope === "local" ? "UAE Local" : "International"} Estimate
-              </h3>
-
-              {!quote ? (
-                <p className="mt-6 text-sm text-white/55">
-                  Select a product to see rental and service charges.
-                </p>
-              ) : (
-                <ul className="mt-6 space-y-3 text-sm">
-                  <ChargeRow
-                    label={`Rental (${days} day${days > 1 ? "s" : ""})`}
-                    value={formatAed(quote.rental)}
-                    emphasize
-                  />
-                  <ChargeRow label="Transport" value={formatAed(quote.transport)} />
-                  <ChargeRow label="Labour" value={formatAed(quote.labor)} />
-                  <ChargeRow label="Setup" value={formatAed(quote.setup)} />
-                  <ChargeRow
-                    label="Crew (per days)"
-                    value={formatAed(quote.crew)}
-                    divider
-                  />
-                  {scope === "international" && (
-                    <>
-                      <ChargeRow label="Cargo" value={formatAed(quote.cargo)} />
-                      <ChargeRow
-                        label="Customs handling"
-                        value={formatAed(quote.customs)}
-                        divider
-                      />
-                    </>
-                  )}
-                  <ChargeRow label="Subtotal" value={formatAed(quote.subtotal)} />
-                  <ChargeRow
-                    label={`VAT (${Math.round(UAE_VAT_RATE * 100)}%)`}
-                    value={formatAed(quote.tax)}
-                  />
-                  <li className="mt-3 flex justify-between gap-4 border border-ff-gold/35 bg-ff-gold/10 px-3 py-3.5">
-                    <span className="font-semibold uppercase tracking-[0.12em] text-ff-gold">
-                      Total due
-                    </span>
-                    <span className="text-lg font-bold text-ff-gold">
-                      {formatAed(quote.total)}
-                    </span>
-                  </li>
-                </ul>
-              )}
-            </aside>
           </form>
         )}
       </div>

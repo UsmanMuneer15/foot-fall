@@ -109,7 +109,7 @@ export function Header() {
         }`}
       >
         <nav
-          className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6"
+          className="mx-auto flex max-h-[calc(100svh-5.5rem)] max-w-7xl flex-col gap-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6"
           aria-label="Mobile"
         >
           {navLinks.map((link) => {
@@ -121,6 +121,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={() => setOpen(false)}
                 className={`rounded-md px-2 py-3 text-sm uppercase tracking-[0.2em] ${
                   active ? "text-ff-gold" : "text-white hover:text-ff-gold"
                 }`}
