@@ -1,5 +1,27 @@
-# Root tooling
-node_modules/
+# dependencies
+node_modules
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+admin/.next/
+server/dist/
+
+# production
+/build
+
+# misc
 .DS_Store
 Thumbs.db
 .idea/
