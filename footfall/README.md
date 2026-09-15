@@ -12,5 +12,4 @@ Website: http://localhost:3000
 
 ## Vercel
 
-If this repo is connected to Vercel, set the project **Root Directory** to `footfall`
-(Project Settings → General → Root Directory).
+Deploy from the **repository root** (leave Root Directory empty). Root `vercel.json` installs/builds this app and copies `.next` to the repo root for the Next.js builder.

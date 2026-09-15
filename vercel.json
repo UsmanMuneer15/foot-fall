@@ -1,0 +1,5 @@
+{
+  "installCommand": "npm install --prefix ./footfall",
+  "buildCommand": "npm run build --prefix ./footfall && node ./scripts/copy-next-output.mjs",
+  "framework": "nextjs"
+}

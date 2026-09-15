@@ -18,6 +18,9 @@ node_modules
 admin/.next/
 server/dist/
 
+# Root copy of Next output (created for Vercel when building from monorepo root)
+.next/
+
 # production
 /build
 
