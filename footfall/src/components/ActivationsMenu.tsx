@@ -159,21 +159,21 @@ function ProductIcon({ name, className }: { name: string; className?: string }) 
 }
 
 const iconColors = [
-  "text-[#0a7a5a] bg-[#0a7a5a]/10",
-  "text-[#2b6cb0] bg-[#2b6cb0]/10",
-  "text-[#9a7a3a] bg-[#c5a059]/15",
-  "text-[#0f4a34] bg-[#0f4a34]/10",
-  "text-[#b45309] bg-[#b45309]/10",
-  "text-[#1d4ed8] bg-[#1d4ed8]/10",
+  "text-ff-gold bg-ff-gold/15 ring-1 ring-ff-gold/30",
+  "text-[#8fd4b8] bg-white/5 ring-1 ring-white/10",
+  "text-[#d4b36e] bg-ff-gold/12 ring-1 ring-ff-gold/25",
+  "text-[#b8e0d0] bg-[#0a3a28] ring-1 ring-ff-gold/15",
+  "text-[#f0c08a] bg-ff-gold/10 ring-1 ring-ff-gold/20",
+  "text-ff-gold-light bg-white/[0.06] ring-1 ring-ff-gold/20",
 ];
 
 const mobileIconColors = [
-  "text-ff-gold bg-ff-gold/15",
-  "text-[#8fd4b8] bg-[#8fd4b8]/12",
-  "text-[#d4b36e] bg-[#d4b36e]/12",
-  "text-[#9ec5ff] bg-[#9ec5ff]/12",
-  "text-[#f0c08a] bg-[#f0c08a]/12",
-  "text-[#b8e0d0] bg-[#b8e0d0]/12",
+  "text-ff-gold bg-ff-gold/15 ring-1 ring-ff-gold/25",
+  "text-[#8fd4b8] bg-[#0a3a28]/55 ring-1 ring-ff-gold/15",
+  "text-[#d4b36e] bg-ff-gold/12 ring-1 ring-ff-gold/20",
+  "text-[#b8e0d0] bg-[#0f4a34]/50 ring-1 ring-white/10",
+  "text-[#f0c08a] bg-ff-gold/10 ring-1 ring-ff-gold/15",
+  "text-ff-gold-light bg-white/5 ring-1 ring-ff-gold/20",
 ];
 
 function ProductItem({
@@ -190,18 +190,18 @@ function ProductItem({
     <button
       type="button"
       onClick={() => onSelect(product.id)}
-      className="group flex w-full items-start gap-3 rounded-lg p-2.5 text-left transition hover:bg-ff-cream"
+      className="group flex w-full items-start gap-2.5 rounded-xl border border-transparent p-2.5 text-left transition hover:border-ff-gold/35 hover:bg-white/[0.05]"
     >
       <span
         className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${color}`}
       >
-        <ProductIcon name={product.icon} className="h-6 w-6" />
+        <ProductIcon name={product.icon} className="h-5 w-5" />
       </span>
       <span className="min-w-0 pt-0.5">
-        <span className="ff-ink block text-[0.8rem] font-semibold leading-snug transition group-hover:!text-ff-green">
+        <span className="block text-[0.8rem] font-semibold leading-snug text-white transition group-hover:text-ff-gold">
           {product.name}
         </span>
-        <span className="ff-soft-copy mt-0.5 block text-[0.7rem] leading-snug">
+        <span className="mt-0.5 block text-[0.7rem] leading-snug text-white/55">
           {product.description}
         </span>
       </span>
@@ -226,7 +226,9 @@ export function ActivationsMenu({
   );
   const [mounted, setMounted] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const menuId = useId();
+  const [menuPos, setMenuPos] = useState({ top: 0, right: 0 });
 
   useEffect(() => {
     setMounted(true);
@@ -234,10 +236,29 @@ export function ActivationsMenu({
 
   useEffect(() => {
     if (variant !== "desktop" || !menuOpen) return;
+
+    function updatePos() {
+      const rect = triggerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      setMenuPos({
+        top: rect.bottom + 10,
+        right: Math.max(12, window.innerWidth - rect.right),
+      });
+    }
+
+    updatePos();
+    window.addEventListener("resize", updatePos);
+    window.addEventListener("scroll", updatePos, true);
+
     function onPointer(e: MouseEvent) {
-      if (!rootRef.current?.contains(e.target as Node)) {
-        setMenuOpen(false);
+      const target = e.target as Node;
+      if (
+        rootRef.current?.contains(target) ||
+        (target instanceof Element && target.closest(`[data-activations-menu="${menuId}"]`))
+      ) {
+        return;
       }
+      setMenuOpen(false);
     }
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") setMenuOpen(false);
@@ -245,10 +266,12 @@ export function ActivationsMenu({
     document.addEventListener("mousedown", onPointer);
     document.addEventListener("keydown", onKey);
     return () => {
+      window.removeEventListener("resize", updatePos);
+      window.removeEventListener("scroll", updatePos, true);
       document.removeEventListener("mousedown", onPointer);
       document.removeEventListener("keydown", onKey);
     };
-  }, [variant, menuOpen]);
+  }, [variant, menuOpen, menuId]);
 
   function openBooking(productId?: string) {
     setSelectedProductId(productId ?? null);
@@ -425,6 +448,7 @@ export function ActivationsMenu({
   return (
     <div ref={rootRef} className="relative">
       <button
+        ref={triggerRef}
         type="button"
         className="btn-outline-gold !gap-1.5 !px-3.5 !py-2.5 !text-[0.55rem] !tracking-[0.1em] whitespace-nowrap xl:!px-4 xl:!text-[0.6rem] xl:!tracking-[0.14em]"
         aria-expanded={menuOpen}
@@ -442,52 +466,70 @@ export function ActivationsMenu({
         </span>
       </button>
 
-      {menuOpen && (
-        <div
-          id={menuId}
-          className="absolute right-0 top-[calc(100%+0.85rem)] z-[60] w-[min(94vw,940px)] origin-top-right"
-          role="menu"
-        >
-          <div
-            className="absolute -top-2 right-12 h-4 w-4 rotate-45 border-l border-t border-ff-gold/20 bg-white"
-            aria-hidden
-          />
+      {mounted && menuOpen
+        ? createPortal(
+            <div
+              id={menuId}
+              data-activations-menu={menuId}
+              className="fixed z-[120] w-[min(96vw,1040px)]"
+              style={{ top: menuPos.top, right: menuPos.right }}
+              role="menu"
+            >
+              <div
+                className="absolute -top-2 right-10 h-3.5 w-3.5 rotate-45 border-l-2 border-t-2 border-ff-gold bg-ff-green"
+                aria-hidden
+              />
 
-          <div className="ff-light-panel overflow-hidden rounded-2xl border border-ff-gold/20 bg-white shadow-[0_24px_60px_rgba(0,0,0,0.28)]">
-            <div className="grid gap-x-8 gap-y-7 p-5 sm:grid-cols-2 sm:p-7 lg:gap-x-10 lg:p-8">
-              {productCategories.map((cat) => {
-                const items = productsByCategory(cat.id);
-                return (
-                  <section key={cat.id} className="min-w-0">
-                    <h3 className="!text-[0.92rem] !font-bold !normal-case !tracking-[0.02em] !text-ff-gold">
-                      {cat.title}
-                    </h3>
-                    <p className="ff-soft-copy mt-1 max-w-[28ch] text-[0.7rem] leading-snug">
-                      {cat.subtitle}
-                    </p>
-                    <div className="mt-3.5 grid gap-0.5 sm:grid-cols-2">
-                      {items.map((product, index) => (
-                        <ProductItem
-                          key={product.id}
-                          product={product}
-                          index={index}
-                          onSelect={openBooking}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
+              <div className="overflow-hidden rounded-xl border-2 border-ff-gold bg-ff-green shadow-[0_28px_70px_rgba(0,0,0,0.55)]">
+                <div className="border-b border-ff-gold/40 bg-ff-green-deep px-5 py-3.5 sm:px-6">
+                  <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-ff-gold">
+                    Footfall Activations
+                  </p>
+                  <p className="mt-1 text-[0.75rem] text-white/75">
+                    Choose an experience to start your booking
+                  </p>
+                </div>
 
-      <BookingModal
-        open={bookingOpen}
-        onClose={() => setBookingOpen(false)}
-        initialProductId={selectedProductId}
-      />
+                <div className="grid max-h-[min(78vh,640px)] gap-x-8 gap-y-6 overflow-y-auto overscroll-contain p-5 sm:grid-cols-2 sm:p-6 lg:gap-x-10">
+                  {productCategories.map((cat) => {
+                    const items = productsByCategory(cat.id);
+                    return (
+                      <section key={cat.id} className="min-w-0">
+                        <div className="border-b border-ff-gold/30 pb-2.5">
+                          <h3 className="text-[0.85rem] font-bold uppercase tracking-[0.1em] text-ff-gold">
+                            {cat.title}
+                          </h3>
+                        </div>
+                        <div className="mt-2.5 grid gap-1 sm:grid-cols-2">
+                          {items.map((product, index) => (
+                            <ProductItem
+                              key={product.id}
+                              product={product}
+                              index={index}
+                              onSelect={openBooking}
+                            />
+                          ))}
+                        </div>
+                      </section>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
+
+      {mounted
+        ? createPortal(
+            <BookingModal
+              open={bookingOpen}
+              onClose={() => setBookingOpen(false)}
+              initialProductId={selectedProductId}
+            />,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
