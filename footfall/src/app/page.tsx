@@ -4,6 +4,7 @@ import { ProcessSection } from "@/components/ProcessSection";
 import { ProofSection } from "@/components/ProofSection";
 import { ServicesBar } from "@/components/ServicesBar";
 
+/** Homepage entry — Vercel redeploy trigger. */
 export default function HomePage() {
   return (
     <>
