@@ -199,7 +199,7 @@ export function BookingModal({
             onSubmit={onSubmit}
             className="grid gap-0 lg:grid-cols-[1.4fr_1fr]"
           >
-            <div className="space-y-3.5 px-5 py-4 sm:px-7 sm:py-5">
+            <div className="space-y-5 px-5 py-4 sm:px-7 sm:py-5">
               <div>
                 <span className={labelClass}>Service Region</span>
                 <div className="mt-1.5 grid grid-cols-2 gap-2.5">
@@ -230,7 +230,7 @@ export function BookingModal({
                 )}
               </div>
 
-              <div className="grid items-start gap-3.5 sm:grid-cols-2">
+              <div className="grid items-start gap-5 sm:grid-cols-2 sm:gap-x-3.5 sm:gap-y-5">
                 <label className={labelClass} htmlFor="event-type">
                   Type of Event
                   <select
