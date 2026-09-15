@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ActivationsMenu } from "@/components/ActivationsMenu";
 import { Logo } from "@/components/Logo";
 import { navLinks } from "@/lib/content";
 
@@ -67,15 +68,8 @@ export function Header() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-          {/* Desktop only — .btn-outline-gold sets display, so hide via wrapper */}
           <div className="hidden shrink-0 lg:block">
-            <Link
-              href="/contact"
-              className="btn-outline-gold !gap-1.5 !px-3.5 !py-2.5 !text-[0.55rem] !tracking-[0.1em] whitespace-nowrap xl:!px-4 xl:!text-[0.6rem] xl:!tracking-[0.14em]"
-            >
-              Create an Activation
-              <span aria-hidden>→</span>
-            </Link>
+            <ActivationsMenu variant="desktop" />
           </div>
 
           <button
@@ -135,9 +129,10 @@ export function Header() {
               </Link>
             );
           })}
-          <Link href="/contact" className="btn-gold mt-3 w-full whitespace-nowrap">
-            Create an Activation →
-          </Link>
+          <ActivationsMenu
+            variant="mobile"
+            onNavigate={() => setOpen(false)}
+          />
         </nav>
       </div>
     </header>
