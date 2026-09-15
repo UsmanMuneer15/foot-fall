@@ -2,7 +2,7 @@
 
 Remote: https://github.com/UsmanMuneer15/foot-fall
 
-The Next.js website lives in the `footfall/` folder. Root scripts exist so Vercel can build from the repository root and still find `.next/routes-manifest.json`.
+The Next.js app is in `footfall/`.
 
 ## Local development
 
@@ -14,13 +14,16 @@ npm run dev
 
 Website: http://localhost:3000
 
-## Vercel deployment
+## Vercel (required settings)
 
-In **Project Settings → General / Build and Deployment**:
+Open the project → **Settings → General / Build & Development Settings**:
 
-1. **Root Directory** → leave **empty** (repository root). Do **not** set it to `footfall`.
-2. **Install Command** / **Build Command** → leave empty so `vercel.json` is used  
-   (`npm install --prefix ./footfall`, then build + copy `.next` to the repo root).
+| Setting | Value |
+|---|---|
+| **Root Directory** | `footfall` |
+| Framework Preset | Next.js |
+| Install Command | *default* (`npm install`) — clear any override |
+| Build Command | *default* (`npm run build`) — clear any override |
+| Output Directory | *default* — leave empty / not overridden |
 
-If Root Directory is set to `footfall`, clear it and redeploy — that setting is what produces  
-`/vercel/path0/.next/routes-manifest.json` missing when the real output is under `footfall/.next`.
+Do **not** use `--prefix footfall` or copy `.next` from the repo root. With Root Directory = `footfall`, Vercel already builds inside that folder.

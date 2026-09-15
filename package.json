@@ -3,13 +3,8 @@
   "private": true,
   "scripts": {
     "dev": "npm run dev --prefix footfall",
-    "build": "npm run build --prefix footfall && node ./scripts/copy-next-output.mjs",
+    "build": "npm run build --prefix footfall",
     "start": "npm run start --prefix footfall",
     "lint": "npm run lint --prefix footfall"
-  },
-  "dependencies": {
-    "next": "16.3.5",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
   }
 }
