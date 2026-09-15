@@ -1,4 +1,5 @@
 # dependencies
+node_modules
 /node_modules
 /.pnp
 .pnp.*
@@ -14,6 +15,8 @@
 # next.js
 /.next/
 /out/
+admin/.next/
+server/dist/
 
 # production
 /build

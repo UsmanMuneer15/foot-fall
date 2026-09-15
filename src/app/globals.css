@@ -213,3 +213,57 @@ p {
 .nav-link[data-active="true"]::after {
   width: 100%;
 }
+
+/* Light surfaces (mega-menu, booking modal) — override global white body text */
+.ff-light-panel {
+  color: var(--ff-charcoal);
+}
+
+.ff-light-panel p {
+  color: var(--ff-charcoal);
+}
+
+.ff-light-panel h1,
+.ff-light-panel h2,
+.ff-light-panel h3,
+.ff-light-panel h4 {
+  color: var(--ff-gold);
+}
+
+.ff-light-panel .ff-muted-copy {
+  color: #5c564c !important;
+}
+
+.ff-light-panel .ff-soft-copy {
+  color: #6f685c !important;
+}
+
+.ff-light-panel .ff-ink {
+  color: #1a1a1a !important;
+}
+
+.ff-light-panel .ff-ink-green {
+  color: var(--ff-green) !important;
+}
+
+.ff-light-panel label,
+.ff-light-panel .ff-field-label {
+  color: var(--ff-green-soft) !important;
+}
+
+.ff-dark-panel {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.ff-dark-panel p,
+.ff-dark-panel span,
+.ff-dark-panel li {
+  color: inherit;
+}
+
+.ff-dark-panel h1,
+.ff-dark-panel h2,
+.ff-dark-panel h3,
+.ff-dark-panel h4 {
+  color: var(--ff-gold);
+}

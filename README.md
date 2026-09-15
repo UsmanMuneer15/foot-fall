@@ -1,12 +1,15 @@
 # FOOTFALL GLOBAL LLC
 
-Website for FOOTFALL GLOBAL LLC — Turning Spaces Into Destinations.
+This folder is an older working copy.
 
-## Local development
+**Use the website repository here instead:**
+
+`E:\Spark Ai\FootFall-web`
+
+Remote: `https://github.com/UsmanMuneer15/foot-fall.git`
 
 ```bash
+cd "E:\Spark Ai\FootFall-web"
 npm install
 npm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000).
