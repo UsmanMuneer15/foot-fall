@@ -5,7 +5,6 @@
     "dev": "npm run dev --prefix footfall",
     "build": "npm run build --prefix footfall",
     "start": "npm run start --prefix footfall",
-    "lint": "npm run lint --prefix footfall",
-    "vercel-build": "npm install --prefix footfall && npm run build --prefix footfall"
+    "lint": "npm run lint --prefix footfall"
   }
 }

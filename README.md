@@ -16,10 +16,10 @@ Website: http://localhost:3000
 
 ## Vercel deployment
 
-**Important:** In the Vercel project settings, set:
+In **Project Settings → Build and Deployment**:
 
-- **Root Directory** → `footfall`
+1. **Root Directory** → `footfall` (keep this)
+2. **Install Command** → leave empty / default (`npm install`)
+3. **Build Command** → leave empty / default (`npm run build`)
 
-Path: Project Settings → General → Root Directory → `footfall` → Save
-
-Then redeploy. Without this, Vercel looks for `app/` at the repo root and the build fails.
+Do **not** use `--prefix footfall` when Root Directory is already `footfall`.
