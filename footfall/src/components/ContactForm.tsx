@@ -131,7 +131,7 @@ export function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         {fields.map((field) => {
           const sharedClassName =
-            "mt-2 w-full border border-ff-gold/30 bg-ff-green/40 px-4 py-3 text-sm normal-case tracking-normal text-white outline-none transition focus:border-ff-gold";
+            "mt-2 w-full border border-ff-gold/30 bg-ff-green/40 px-4 py-3 text-sm normal-case tracking-normal text-white outline-none transition focus:border-ff-gold [color-scheme:dark]";
 
           if (field.name === "telephone") {
             return (
@@ -198,7 +198,7 @@ export function ContactForm() {
                     }
                   }}
                   aria-invalid={Boolean(errors.eventDate)}
-                  className={sharedClassName}
+                  className={`${sharedClassName} [color-scheme:dark]`}
                 />
                 {errors.eventDate ? (
                   <span className="mt-1.5 block text-[0.7rem] normal-case tracking-normal text-red-300">
