@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import { submitContact } from "@/lib/api";
 
 const fields = [
   { name: "name", label: "Name", type: "text", required: true },
@@ -30,7 +31,6 @@ function todayISODate() {
 
 function isPhoneValid(value: string) {
   if (!value.trim()) return true;
-  // Digits only, optional leading +, spaces/dashes/parentheses allowed as separators
   return /^\+?[\d\s()-]{7,20}$/.test(value.trim()) && /\d{7,}/.test(value);
 }
 
@@ -47,6 +47,8 @@ function isDateNotPast(value: string, minDate: string) {
 export function ContactForm() {
   const minDate = useMemo(() => todayISODate(), []);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [telephone, setTelephone] = useState("");
   const [attendance, setAttendance] = useState("");
   const [eventDate, setEventDate] = useState("");
@@ -79,10 +81,37 @@ export function ContactForm() {
     return Object.keys(next).length === 0;
   }
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!validate()) return;
-    setSubmitted(true);
+
+    const form = event.currentTarget;
+    const data = new FormData(form);
+
+    setSubmitting(true);
+    setSubmitError("");
+
+    try {
+      await submitContact({
+        name: String(data.get("name") || "").trim(),
+        company: String(data.get("company") || "").trim(),
+        email: String(data.get("email") || "").trim(),
+        telephone: telephone.trim() || undefined,
+        eventVenue: String(data.get("eventVenue") || "").trim() || undefined,
+        eventDate: eventDate || undefined,
+        location: String(data.get("location") || "").trim() || undefined,
+        attendance: attendance ? Number(attendance) : undefined,
+        goal: String(data.get("goal") || "").trim() || undefined,
+        message: String(data.get("message") || "").trim(),
+      });
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(
+        err instanceof Error ? err.message : "Failed to submit. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (submitted) {
@@ -247,8 +276,14 @@ export function ContactForm() {
         />
       </label>
 
-      <button type="submit" className="btn-gold">
-        Submit
+      {submitError ? (
+        <p className="text-sm text-red-300" role="alert">
+          {submitError}
+        </p>
+      ) : null}
+
+      <button type="submit" className="btn-gold" disabled={submitting}>
+        {submitting ? "Submitting…" : "Submit"}
       </button>
     </form>
   );

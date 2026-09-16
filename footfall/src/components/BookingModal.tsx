@@ -14,6 +14,7 @@ import {
   UAE_VAT_RATE,
 } from "@/lib/products";
 import { fetchServiceFeeRates } from "@/lib/api";
+import { DateRangeCalendar, daysInRange } from "@/components/DateRangeCalendar";
 
 type BookingModalProps = {
   open: boolean;
@@ -26,15 +27,6 @@ function todayISODate() {
   const y = now.getFullYear();
   const m = String(now.getMonth() + 1).padStart(2, "0");
   const d = String(now.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
-}
-
-function addDaysISO(iso: string, days: number) {
-  const date = new Date(`${iso}T12:00:00`);
-  date.setDate(date.getDate() + days);
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
   return `${y}-${m}-${d}`;
 }
 
@@ -56,7 +48,7 @@ export function BookingModal({
   const [eventType, setEventType] = useState("");
   const [productId, setProductId] = useState(initialProductId ?? "");
   const [startDate, setStartDate] = useState("");
-  const [days, setDays] = useState(1);
+  const [endDate, setEndDate] = useState("");
   const [cardName, setCardName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
@@ -68,6 +60,8 @@ export function BookingModal({
   useEffect(() => {
     if (!open) return;
     setProductId(initialProductId ?? "");
+    setStartDate("");
+    setEndDate("");
     setPaid(false);
     setError("");
   }, [open, initialProductId]);
@@ -97,10 +91,12 @@ export function BookingModal({
   }, [open, onClose]);
 
   const product = productId ? getProductById(productId) : undefined;
-  const quote: BookingQuote | null = productId
-    ? calculateBookingQuote({ productId, days, scope, fees })
-    : null;
-  const endDate = startDate ? addDaysISO(startDate, Math.max(0, days - 1)) : "";
+  const days =
+    startDate && endDate ? daysInRange(startDate, endDate) : 0;
+  const quote: BookingQuote | null =
+    productId && days > 0
+      ? calculateBookingQuote({ productId, days, scope, fees })
+      : null;
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -112,8 +108,8 @@ export function BookingModal({
       setError("Please choose a product.");
       return;
     }
-    if (!startDate) {
-      setError("Please choose a start date on the calendar.");
+    if (!startDate || !endDate) {
+      setError("Please select a start and end date on the calendar.");
       return;
     }
     if (days < 1) {
@@ -268,63 +264,26 @@ export function BookingModal({
                 </label>
 
                 <div className="min-w-0">
-                  <label className={labelClass} htmlFor="start-date">
-                    Calendar — Start Date
+                  <label className={labelClass} htmlFor="booking-date-range">
+                    Calendar — Start &amp; End Date
                   </label>
-                  <input
-                    id="start-date"
-                    type="date"
-                    min={minDate}
-                    className={fieldClass}
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    required
+                  <DateRangeCalendar
+                    minDate={minDate}
+                    startDate={startDate}
+                    endDate={endDate}
+                    maxDays={90}
+                    onChange={(start, end) => {
+                      setStartDate(start);
+                      setEndDate(end);
+                    }}
                   />
                   <p className="mt-1 min-h-[1rem] text-[0.68rem] text-white/50">
-                    {endDate
-                      ? `Ends ${endDate} (${days} day${days > 1 ? "s" : ""})`
-                      : "\u00a0"}
-                  </p>
-                </div>
-
-                <div className="min-w-0">
-                  <label className={labelClass} htmlFor="days">
-                    How Many Days
-                  </label>
-                  <div className="mt-1.5 flex h-[42px] items-stretch gap-2">
-                    <button
-                      type="button"
-                      className="flex w-10 shrink-0 items-center justify-center border border-ff-gold/30 bg-ff-green/40 text-lg text-ff-gold transition hover:border-ff-gold"
-                      onClick={() => setDays((d) => Math.max(1, d - 1))}
-                      aria-label="Decrease days"
-                    >
-                      −
-                    </button>
-                    <input
-                      id="days"
-                      type="number"
-                      min={1}
-                      max={90}
-                      className="h-full w-full border border-ff-gold/30 bg-ff-green/40 px-3 text-center text-sm normal-case tracking-normal text-white outline-none transition focus:border-ff-gold [color-scheme:dark]"
-                      value={days}
-                      onChange={(e) =>
-                        setDays(
-                          Math.max(1, Math.min(90, Number(e.target.value) || 1)),
-                        )
-                      }
-                    />
-                    <button
-                      type="button"
-                      className="flex w-10 shrink-0 items-center justify-center border border-ff-gold/30 bg-ff-green/40 text-lg text-ff-gold transition hover:border-ff-gold"
-                      onClick={() => setDays((d) => Math.min(90, d + 1))}
-                      aria-label="Increase days"
-                    >
-                      +
-                    </button>
-                  </div>
-                  <p className="mt-1 min-h-[1rem] text-[0.68rem] text-white/50">
-                    {product
-                      ? `${formatAed(product.dailyRateAed)} / day rental`
+                    {startDate && endDate
+                      ? `${days} day${days > 1 ? "s" : ""}${
+                          product
+                            ? ` · ${formatAed(product.dailyRateAed)} / day rental`
+                            : ""
+                        }`
                       : "\u00a0"}
                   </p>
                 </div>

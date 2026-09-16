@@ -13,6 +13,35 @@ type ApiFees = {
   customsHandlingFlat: number;
 };
 
+export type ContactPayload = {
+  name: string;
+  company: string;
+  email: string;
+  telephone?: string;
+  eventVenue?: string;
+  eventDate?: string;
+  location?: string;
+  attendance?: number;
+  goal?: string;
+  message: string;
+};
+
+export async function submitContact(
+  payload: ContactPayload,
+): Promise<void> {
+  const res = await fetch(`${API_URL}/api/contacts`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    throw new Error(
+      (err?.error as string) || "Failed to submit contact form.",
+    );
+  }
+}
+
 export async function fetchServiceFeeRates(
   scope: ServiceScope,
 ): Promise<ServiceFeeRates> {
