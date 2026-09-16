@@ -748,21 +748,24 @@ export function BookingModal({
 
                 {/* Address */}
                 <section>
-                  <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex min-w-0 flex-1 items-center gap-3">
+                  <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex min-w-0 w-full items-center gap-3 sm:flex-1">
                       <p className="shrink-0 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-ff-gold">
                         Location / Address
                       </p>
-                      <span className="h-px flex-1 bg-gradient-to-r from-ff-gold/35 to-transparent" />
+                      <span
+                        className="h-px flex-1 bg-gradient-to-r from-ff-gold/35 to-transparent"
+                        aria-hidden
+                      />
                     </div>
                     <button
                       type="button"
                       onClick={useCurrentLocation}
                       disabled={locating}
-                      className="inline-flex shrink-0 items-center gap-2 border border-ff-gold/55 bg-transparent px-3.5 py-2 text-[0.58rem] font-semibold uppercase tracking-[0.14em] text-ff-gold transition hover:border-ff-gold hover:bg-ff-gold/10 disabled:cursor-not-allowed disabled:opacity-55"
+                      className="inline-flex w-full items-center justify-center gap-2 border border-ff-gold/55 bg-transparent px-3.5 py-2.5 text-[0.58rem] font-semibold uppercase tracking-[0.14em] text-ff-gold transition hover:border-ff-gold hover:bg-ff-gold/10 disabled:cursor-not-allowed disabled:opacity-55 sm:w-auto sm:shrink-0 sm:justify-start sm:py-2"
                     >
                       <svg
-                        className="h-3.5 w-3.5"
+                        className="h-3.5 w-3.5 shrink-0"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
