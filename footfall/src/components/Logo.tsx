@@ -3,13 +3,14 @@ import Link from "next/link";
 
 type LogoProps = {
   className?: string;
+  href?: string;
 };
 
 /** Official FOOTFALL brand logo lockup — crest + wordmark */
-export function Logo({ className = "" }: LogoProps) {
+export function Logo({ className = "", href = "/" }: LogoProps) {
   return (
     <Link
-      href="/"
+      href={href}
       className={`inline-flex shrink-0 items-center gap-2.5 sm:gap-3.5 ${className}`}
       aria-label="FOOTFALL GLOBAL LLC home"
     >

@@ -1,5 +1,6 @@
 import type { ServiceFeeRates, ServiceScope } from "@/lib/products";
 import { serviceFees } from "@/lib/products";
+import { authHeaders, type AuthUser } from "@/lib/auth";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
@@ -25,6 +26,24 @@ export type ContactPayload = {
   goal?: string;
   message: string;
 };
+
+export type AuthResult = {
+  token: string;
+  user: AuthUser;
+};
+
+export type SignupInput = {
+  name: string;
+  email: string;
+  phone?: string;
+  password: string;
+  confirmPassword: string;
+};
+
+async function parseError(res: Response, fallback: string) {
+  const err = await res.json().catch(() => null);
+  return (err?.error as string) || fallback;
+}
 
 export async function submitContact(
   payload: ContactPayload,
@@ -70,4 +89,200 @@ export async function fetchServiceFeeRates(
       customsHandlingFlat: fallback.customsHandlingFlat,
     };
   }
+}
+
+export async function signup(input: SignupInput): Promise<AuthResult> {
+  const res = await fetch(`${API_URL}/api/user-auth/signup`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+  });
+  if (!res.ok) {
+    throw new Error(await parseError(res, "Signup failed."));
+  }
+  const json = (await res.json()) as { data: AuthResult };
+  return json.data;
+}
+
+export async function login(
+  email: string,
+  password: string,
+): Promise<AuthResult> {
+  const res = await fetch(`${API_URL}/api/user-auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+  if (!res.ok) {
+    throw new Error(await parseError(res, "Login failed."));
+  }
+  const json = (await res.json()) as { data: AuthResult };
+  return json.data;
+}
+
+export async function loginWithGoogle(idToken: string): Promise<AuthResult> {
+  const res = await fetch(`${API_URL}/api/user-auth/google`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ idToken }),
+  });
+  if (!res.ok) {
+    throw new Error(await parseError(res, "Google sign-in failed."));
+  }
+  const json = (await res.json()) as { data: AuthResult };
+  return json.data;
+}
+
+export async function fetchGoogleAuthConfig(): Promise<{
+  enabled: boolean;
+  clientId: string | null;
+}> {
+  const envClientId = (process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "").trim();
+  if (envClientId) {
+    return { enabled: true, clientId: envClientId };
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/api/user-auth/google/config`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return { enabled: false, clientId: null };
+    const json = (await res.json()) as {
+      data: { enabled: boolean; clientId: string | null };
+    };
+    return json.data;
+  } catch {
+    return { enabled: false, clientId: null };
+  }
+}
+
+export async function requestPasswordReset(email: string): Promise<{
+  message: string;
+  otp?: string;
+}> {
+  const res = await fetch(`${API_URL}/api/user-auth/forgot-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+  if (!res.ok) {
+    throw new Error(await parseError(res, "Failed to send reset code."));
+  }
+  const json = (await res.json()) as {
+    data: { message: string; otp?: string };
+  };
+  return json.data;
+}
+
+export async function verifyResetOtp(
+  email: string,
+  otp: string,
+): Promise<void> {
+  const res = await fetch(`${API_URL}/api/user-auth/verify-reset-otp`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, otp }),
+  });
+  if (!res.ok) {
+    throw new Error(await parseError(res, "Invalid or expired reset code."));
+  }
+}
+
+export async function resetPassword(input: {
+  email: string;
+  otp: string;
+  password: string;
+  confirmPassword: string;
+}): Promise<string> {
+  const res = await fetch(`${API_URL}/api/user-auth/reset-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+  });
+  if (!res.ok) {
+    throw new Error(await parseError(res, "Failed to reset password."));
+  }
+  const json = (await res.json()) as { data: { message: string } };
+  return json.data.message;
+}
+
+export type BookingSubmitInput = {
+  scope: ServiceScope;
+  eventType: string;
+  productId: string;
+  productName: string;
+  startDate: string;
+  endDate: string;
+  days: number;
+  customerName: string;
+  customerEmail: string;
+  customerPhone?: string;
+  addressLine: string;
+  area: string;
+  emirate: string;
+  poBox?: string;
+  latitude?: number | null;
+  longitude?: number | null;
+  notes?: string;
+  rental: number;
+  transport: number;
+  labor: number;
+  setup: number;
+  crew: number;
+  cargo: number;
+  customs: number;
+  subtotal: number;
+  tax: number;
+  total: number;
+};
+
+export type BookingSubmitResult = {
+  id: number;
+  bookingCode: string;
+  status: string;
+};
+
+export async function submitBooking(
+  input: BookingSubmitInput,
+): Promise<BookingSubmitResult> {
+  const res = await fetch(`${API_URL}/api/bookings`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...authHeaders(),
+    },
+    body: JSON.stringify(input),
+  });
+  if (!res.ok) {
+    throw new Error(await parseError(res, "Failed to submit booking."));
+  }
+  const json = (await res.json()) as { data: BookingSubmitResult };
+  return json.data;
+}
+
+export type BookingBlockedRange = {
+  startDate: string;
+  endDate: string;
+  status: string;
+  bookingCode: string;
+};
+
+export async function fetchProductAvailability(
+  productId: string,
+  from?: string,
+): Promise<BookingBlockedRange[]> {
+  const params = new URLSearchParams();
+  if (from) params.set("from", from);
+  const qs = params.toString();
+  const res = await fetch(
+    `${API_URL}/api/bookings/availability/${encodeURIComponent(productId)}${qs ? `?${qs}` : ""}`,
+    { cache: "no-store" },
+  );
+  if (!res.ok) {
+    throw new Error(await parseError(res, "Failed to load availability."));
+  }
+  const json = (await res.json()) as {
+    data: { blockedRanges: BookingBlockedRange[] };
+  };
+  return json.data.blockedRanges || [];
 }

@@ -2,12 +2,15 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useRouter } from "next/navigation";
 import {
   productCategories,
   productsByCategory,
   type Product,
 } from "@/lib/products";
 import { BookingModal } from "@/components/BookingModal";
+import { getUser } from "@/lib/auth";
+import { toast } from "@/lib/toast";
 
 type IconProps = { className?: string };
 
@@ -219,6 +222,7 @@ export function ActivationsMenu({
   variant = "desktop",
   onNavigate,
 }: ActivationsMenuProps) {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState<string | null>(
@@ -273,7 +277,18 @@ export function ActivationsMenu({
     };
   }, [variant, menuOpen, menuId]);
 
+  function requireAuthForBooking() {
+    const user = getUser();
+    if (user) return true;
+    setMenuOpen(false);
+    onNavigate?.();
+    toast.error("Please sign in to create an activation.");
+    router.push("/login");
+    return false;
+  }
+
   function openBooking(productId?: string) {
+    if (!requireAuthForBooking()) return;
     setSelectedProductId(productId ?? null);
     setMenuOpen(false);
     onNavigate?.();
@@ -450,7 +465,7 @@ export function ActivationsMenu({
       <button
         ref={triggerRef}
         type="button"
-        className="btn-outline-gold !gap-1.5 !px-3.5 !py-2.5 !text-[0.55rem] !tracking-[0.1em] whitespace-nowrap xl:!px-4 xl:!text-[0.6rem] xl:!tracking-[0.14em]"
+        className="group inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-ff-gold/80 bg-transparent py-1.5 pl-3.5 pr-1.5 text-[0.55rem] font-semibold uppercase tracking-[0.1em] text-white transition hover:border-ff-gold hover:bg-ff-gold/10 xl:gap-2.5 xl:py-2 xl:pl-4 xl:pr-2 xl:text-[0.58rem] xl:tracking-[0.12em]"
         aria-expanded={menuOpen}
         aria-controls={menuId}
         onClick={() => setMenuOpen((v) => !v)}
@@ -458,11 +473,11 @@ export function ActivationsMenu({
         Create an Activation
         <span
           aria-hidden
-          className={`inline-block text-[0.7em] transition-transform duration-200 ${
-            menuOpen ? "rotate-180" : ""
+          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-ff-gold/50 text-[0.7rem] text-ff-gold transition group-hover:border-ff-gold group-hover:bg-ff-gold group-hover:text-ff-green-deep xl:h-7 xl:w-7 xl:text-[0.75rem] ${
+            menuOpen ? "rotate-90" : ""
           }`}
         >
-          ↓
+          →
         </span>
       </button>
 

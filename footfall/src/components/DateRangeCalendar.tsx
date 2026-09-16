@@ -2,13 +2,22 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+export type BlockedDateRange = {
+  startDate: string;
+  endDate: string;
+};
+
 type DateRangeCalendarProps = {
   minDate: string;
   startDate: string;
   endDate: string;
   maxDays?: number;
+  blockedRanges?: BlockedDateRange[];
+  disabled?: boolean;
   onChange: (start: string, end: string) => void;
   inputClassName?: string;
+  /** Called when the calendar popover opens — use to refresh availability. */
+  onOpen?: () => void;
 };
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -88,11 +97,53 @@ export function daysInRange(startISO: string, endISO: string) {
   return daysBetweenInclusive(startISO, endISO);
 }
 
+/** Expand inclusive ranges into every blocked YYYY-MM-DD day. */
+export function expandBlockedDates(
+  blockedRanges: BlockedDateRange[] = [],
+): Set<string> {
+  const days = new Set<string>();
+  for (const range of blockedRanges) {
+    if (!range.startDate || !range.endDate) continue;
+    let cur = parseISO(range.startDate);
+    const end = parseISO(range.endDate);
+    if (Number.isNaN(cur.getTime()) || Number.isNaN(end.getTime())) continue;
+    while (cur.getTime() <= end.getTime()) {
+      days.add(toISO(cur));
+      cur = addDays(cur, 1);
+    }
+  }
+  return days;
+}
+
+export function isDateBlocked(
+  iso: string,
+  blockedRanges: BlockedDateRange[] = [],
+) {
+  return expandBlockedDates(blockedRanges).has(iso);
+}
+
+export function rangeOverlapsBlocked(
+  startISO: string,
+  endISO: string,
+  blockedRanges: BlockedDateRange[] = [],
+) {
+  if (!startISO || !endISO) return false;
+  const blocked = expandBlockedDates(blockedRanges);
+  let cur = parseISO(startISO);
+  const end = parseISO(endISO);
+  while (cur.getTime() <= end.getTime()) {
+    if (blocked.has(toISO(cur))) return true;
+    cur = addDays(cur, 1);
+  }
+  return false;
+}
+
 function CalendarGrid({
   minDate,
   startDate,
   endDate,
   maxDays,
+  blockedRanges,
   onChange,
   onComplete,
 }: {
@@ -100,6 +151,7 @@ function CalendarGrid({
   startDate: string;
   endDate: string;
   maxDays: number;
+  blockedRanges: BlockedDateRange[];
   onChange: (start: string, end: string) => void;
   onComplete?: () => void;
 }) {
@@ -113,6 +165,11 @@ function CalendarGrid({
     [viewYear, viewMonth],
   );
 
+  const blockedDays = useMemo(
+    () => expandBlockedDates(blockedRanges),
+    [blockedRanges],
+  );
+
   function goMonth(delta: number) {
     const next = new Date(viewYear, viewMonth + delta, 1, 12);
     setViewYear(next.getFullYear());
@@ -123,6 +180,7 @@ function CalendarGrid({
     if (!inMonth) return;
     const clicked = parseISO(iso);
     if (clicked < min) return;
+    if (blockedDays.has(iso)) return;
 
     if (!startDate || (startDate && endDate)) {
       onChange(iso, "");
@@ -137,6 +195,7 @@ function CalendarGrid({
 
     const span = daysBetweenInclusive(startDate, iso);
     if (span > maxDays) return;
+    if (rangeOverlapsBlocked(startDate, iso, blockedRanges)) return;
 
     onChange(startDate, iso);
     onComplete?.();
@@ -146,6 +205,7 @@ function CalendarGrid({
     if (!inMonth) return "outside";
     const date = parseISO(iso);
     if (date < min) return "disabled";
+    if (blockedDays.has(iso)) return "blocked";
 
     const isStart = iso === startDate;
     const isEnd = iso === endDate;
@@ -195,7 +255,10 @@ function CalendarGrid({
 
         {cells.map(({ iso, day, inMonth }) => {
           const state = dayState(iso, inMonth);
-          const disabled = state === "disabled" || state === "outside";
+          const disabled =
+            state === "disabled" ||
+            state === "outside" ||
+            state === "blocked";
 
           return (
             <button
@@ -203,10 +266,17 @@ function CalendarGrid({
               type="button"
               disabled={disabled}
               onClick={() => handleDayClick(iso, inMonth)}
+              title={
+                state === "blocked"
+                  ? "Already booked for this product"
+                  : undefined
+              }
               className={[
                 "relative h-9 text-sm transition",
                 state === "outside" && "pointer-events-none text-white/15",
                 state === "disabled" && "cursor-not-allowed text-white/25",
+                state === "blocked" &&
+                  "cursor-not-allowed bg-red-500/20 text-red-200/70 line-through",
                 state === "default" &&
                   "text-white hover:bg-ff-gold/15 hover:text-ff-gold-light",
                 state === "range" && "bg-ff-gold/20 text-white",
@@ -230,6 +300,9 @@ function CalendarGrid({
       </div>
 
       <p className="mt-3 text-[0.68rem] leading-relaxed text-white/55">
+        {blockedDays.size > 0
+          ? "Red struck-through dates are already booked for this product (including your own bookings) and cannot be selected. "
+          : ""}
         {startDate && !endDate
           ? "Now select your end date."
           : `Select start date, then end date (max ${maxDays} days).`}
@@ -243,8 +316,11 @@ export function DateRangeCalendar({
   startDate,
   endDate,
   maxDays = 90,
+  blockedRanges = [],
+  disabled = false,
   onChange,
   inputClassName = "",
+  onOpen,
 }: DateRangeCalendarProps) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -258,6 +334,10 @@ export function DateRangeCalendar({
     }
     return "";
   }, [startDate, endDate]);
+
+  useEffect(() => {
+    if (disabled) setOpen(false);
+  }, [disabled]);
 
   useEffect(() => {
     if (!open) return;
@@ -287,12 +367,24 @@ export function DateRangeCalendar({
         id="booking-date-range"
         aria-haspopup="dialog"
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-        className={`mt-1.5 flex w-full items-center justify-between gap-3 border border-ff-gold/30 bg-ff-green/40 px-3.5 py-2.5 text-left text-sm normal-case tracking-normal outline-none transition focus:border-ff-gold ${
-          displayValue ? "text-white" : "text-white/45"
+        onClick={() => {
+          if (disabled) return;
+          setOpen((v) => {
+            const next = !v;
+            if (next) onOpen?.();
+            return next;
+          });
+        }}
+        disabled={disabled}
+        className={`mt-2 flex w-full items-center justify-between gap-3 border border-ff-gold/35 bg-black/20 px-3.5 py-[0.7rem] text-left text-[0.875rem] normal-case tracking-normal outline-none transition hover:border-ff-gold/55 focus:border-ff-gold disabled:cursor-not-allowed disabled:opacity-55 ${
+          displayValue ? "text-white" : "text-white/40"
         } ${inputClassName}`}
       >
-        <span>{displayValue || "Select start & end date"}</span>
+        <span className="truncate">
+          {disabled
+            ? "Select a product first"
+            : displayValue || "Select start & end date"}
+        </span>
         <svg
           className="h-4 w-4 shrink-0 text-ff-gold"
           viewBox="0 0 24 24"
@@ -317,6 +409,7 @@ export function DateRangeCalendar({
             startDate={startDate}
             endDate={endDate}
             maxDays={maxDays}
+            blockedRanges={blockedRanges}
             onChange={onChange}
             onComplete={() => setOpen(false)}
           />

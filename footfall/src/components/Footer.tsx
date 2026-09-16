@@ -1,4 +1,17 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
+const AUTH_ROUTES = ["/login", "/signup", "/forgot-password"];
+
 export function Footer() {
+  const pathname = usePathname();
+  const isAuthRoute = AUTH_ROUTES.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`),
+  );
+
+  if (isAuthRoute) return null;
+
   return (
     <footer className="border-t border-ff-gold/20 bg-ff-green-deep">
       <div className="mx-auto flex max-w-[1440px] flex-col gap-4 px-4 py-7 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-12">
