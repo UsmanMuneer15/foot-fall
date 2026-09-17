@@ -110,7 +110,7 @@ export function summarizeFieldErrors(
   );
   if (messages.length === 0) return null;
   if (messages.length === 1) return messages[0];
-  return `Please fix ${messages.length} fields highlighted below.`;
+  return "Please fix the fields highlighted below.";
 }
 
 /** Keep only defined error strings for form state. */

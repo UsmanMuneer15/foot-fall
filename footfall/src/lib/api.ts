@@ -133,29 +133,6 @@ export async function loginWithGoogle(idToken: string): Promise<AuthResult> {
   return json.data;
 }
 
-export async function fetchGoogleAuthConfig(): Promise<{
-  enabled: boolean;
-  clientId: string | null;
-}> {
-  const envClientId = (process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "").trim();
-  if (envClientId) {
-    return { enabled: true, clientId: envClientId };
-  }
-
-  try {
-    const res = await fetch(`${API_URL}/api/user-auth/google/config`, {
-      cache: "no-store",
-    });
-    if (!res.ok) return { enabled: false, clientId: null };
-    const json = (await res.json()) as {
-      data: { enabled: boolean; clientId: string | null };
-    };
-    return json.data;
-  } catch {
-    return { enabled: false, clientId: null };
-  }
-}
-
 export async function requestPasswordReset(email: string): Promise<{
   message: string;
   otp?: string;

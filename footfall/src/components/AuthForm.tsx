@@ -2,15 +2,15 @@
 
 import {
   ReactNode,
-  useEffect,
-  useRef,
   useState,
   type HTMLAttributes,
 } from "react";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
-import { fetchGoogleAuthConfig, loginWithGoogle } from "@/lib/api";
+import { loginWithGoogle } from "@/lib/api";
 import type { AuthResult } from "@/lib/api";
+import { isFirebaseConfigured } from "@/lib/firebase";
+import { signInWithGoogleFirebase } from "@/lib/googleAuth";
 
 type AuthShellProps = {
   eyebrow: string;
@@ -230,28 +230,6 @@ export function AuthDivider() {
   );
 }
 
-declare global {
-  interface Window {
-    google?: {
-      accounts: {
-        id: {
-          initialize: (config: {
-            client_id: string;
-            callback: (response: { credential: string }) => void;
-            auto_select?: boolean;
-            ux_mode?: "popup" | "redirect";
-          }) => void;
-          renderButton: (
-            parent: HTMLElement,
-            options: Record<string, unknown>,
-          ) => void;
-          cancel: () => void;
-        };
-      };
-    };
-  }
-}
-
 type GoogleSignInButtonProps = {
   label?: string;
   onSuccess: (result: AuthResult) => void;
@@ -263,137 +241,45 @@ export function GoogleSignInButton({
   onSuccess,
   onError,
 }: GoogleSignInButtonProps) {
-  const hostRef = useRef<HTMLDivElement>(null);
-  const initializedRef = useRef(false);
-  const [status, setStatus] = useState<"loading" | "ready" | "missing">(
-    "loading",
-  );
   const [busy, setBusy] = useState(false);
-  const successRef = useRef(onSuccess);
-  const errorRef = useRef(onError);
+  const configured = isFirebaseConfigured();
 
-  useEffect(() => {
-    successRef.current = onSuccess;
-    errorRef.current = onError;
-  }, [onSuccess, onError]);
-
-  useEffect(() => {
-    let cancelled = false;
-    let scriptEl: HTMLScriptElement | null = null;
-
-    async function setup() {
-      if (initializedRef.current) return;
-
-      const config = await fetchGoogleAuthConfig();
-      if (cancelled) return;
-
-      if (!config.enabled || !config.clientId) {
-        setStatus("missing");
-        return;
-      }
-
-      const startGoogle = () => {
-        if (
-          cancelled ||
-          initializedRef.current ||
-          !hostRef.current ||
-          !window.google?.accounts?.id
-        ) {
-          return;
-        }
-
-        initializedRef.current = true;
-        hostRef.current.innerHTML = "";
-        window.google.accounts.id.initialize({
-          client_id: config.clientId!,
-          callback: async (response) => {
-            if (!response.credential) {
-              errorRef.current("Google did not return a credential.");
-              return;
-            }
-            setBusy(true);
-            try {
-              const result = await loginWithGoogle(response.credential);
-              successRef.current(result);
-            } catch (err) {
-              errorRef.current(
-                err instanceof Error ? err.message : "Google sign-in failed.",
-              );
-            } finally {
-              setBusy(false);
-            }
-          },
-          ux_mode: "popup",
-        });
-
-        window.google.accounts.id.renderButton(hostRef.current, {
-          theme: "outline",
-          size: "large",
-          shape: "rectangular",
-          text: "continue_with",
-          width: Math.min(hostRef.current.offsetWidth || 360, 400),
-          logo_alignment: "left",
-        });
-        setStatus("ready");
-      };
-
-      if (window.google?.accounts?.id) {
-        startGoogle();
-        return;
-      }
-
-      scriptEl = document.createElement("script");
-      scriptEl.src = "https://accounts.google.com/gsi/client";
-      scriptEl.async = true;
-      scriptEl.defer = true;
-      scriptEl.onload = () => {
-        if (!cancelled) startGoogle();
-      };
-      scriptEl.onerror = () => {
-        if (!cancelled) {
-          setStatus("missing");
-          errorRef.current("Failed to load Google sign-in.");
-        }
-      };
-      document.body.appendChild(scriptEl);
+  async function handleClick() {
+    if (!configured) {
+      onError("Firebase Google sign-in is not configured.");
+      return;
     }
+    if (busy) return;
 
-    void setup();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    setBusy(true);
+    try {
+      const idToken = await signInWithGoogleFirebase();
+      const result = await loginWithGoogle(idToken);
+      onSuccess(result);
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Google sign-in failed.";
+      if (/popup-closed-by-user|cancelled|canceled/i.test(message)) {
+        onError("Google sign-in was cancelled.");
+      } else {
+        onError(message);
+      }
+    } finally {
+      setBusy(false);
+    }
+  }
 
   return (
     <div className="space-y-2">
-      <div className="relative min-h-[44px] w-full">
-        {status === "loading" ? (
-          <div className="flex h-11 items-center justify-center border border-ff-gold/25 text-xs uppercase tracking-[0.14em] text-white/50">
-            Loading Google…
-          </div>
-        ) : null}
-
-        {status === "missing" ? (
-          <button
-            type="button"
-            className="flex w-full items-center justify-center gap-3 border border-ff-gold/30 bg-transparent px-4 py-3 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-ff-gold/70"
-            onClick={() =>
-              errorRef.current(
-                "Add GOOGLE_CLIENT_ID to your environment variables to enable Google sign-in.",
-              )
-            }
-          >
-            <GoogleGlyph />
-            {label}
-          </button>
-        ) : null}
-
-        <div
-          ref={hostRef}
-          className={`flex w-full justify-center ${status === "ready" ? "block" : "hidden"} ${busy ? "pointer-events-none opacity-60" : ""}`}
-        />
-      </div>
+      <button
+        type="button"
+        onClick={handleClick}
+        disabled={busy || !configured}
+        className="flex w-full items-center justify-center gap-3 border border-ff-gold/45 bg-transparent px-4 py-3 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-ff-gold transition hover:border-ff-gold hover:bg-ff-gold/10 disabled:cursor-not-allowed disabled:opacity-55"
+      >
+        <GoogleGlyph />
+        {busy ? "Connecting…" : label}
+      </button>
     </div>
   );
 }
