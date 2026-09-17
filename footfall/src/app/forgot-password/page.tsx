@@ -69,12 +69,8 @@ export default function ForgotPasswordPage() {
 
     setLoading(true);
     try {
-      const result = await requestPasswordReset(email.trim());
-      toast.success(
-        result.otp
-          ? `Reset code sent. Dev OTP: ${result.otp}`
-          : "If that email is registered, a reset code has been sent.",
-      );
+      await requestPasswordReset(email.trim());
+      toast.success("OTP sent to your email.");
       setStep("otp");
       setErrors({});
     } catch (err) {
