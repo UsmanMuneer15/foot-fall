@@ -161,11 +161,12 @@ export function Header() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-4 py-3.5 sm:gap-5 sm:px-8 sm:py-4 lg:gap-5 lg:px-8 xl:gap-6 xl:px-10 2xl:gap-8 2xl:px-12">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 py-3.5 sm:gap-4 sm:px-6 sm:py-4 xl:gap-6 xl:px-10 2xl:gap-8 2xl:px-12">
         <Logo className="shrink-0" />
 
+        {/* Full nav only on xl+ so mid widths (e.g. 1100px) use the compact menu */}
         <nav
-          className="hidden min-w-0 flex-1 items-center justify-center gap-3 lg:flex xl:gap-5 2xl:gap-7"
+          className="hidden min-w-0 flex-1 items-center justify-center gap-4 xl:flex 2xl:gap-7"
           aria-label="Primary"
         >
           {navLinks.map((link) => {
@@ -178,7 +179,7 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 data-active={active}
-                className={`nav-link whitespace-nowrap text-[0.56rem] font-medium uppercase tracking-[0.08em] transition-colors xl:text-[0.62rem] xl:tracking-[0.12em] 2xl:text-[0.68rem] 2xl:tracking-[0.16em] ${
+                className={`nav-link whitespace-nowrap text-[0.6rem] font-medium uppercase tracking-[0.1em] transition-colors 2xl:text-[0.68rem] 2xl:tracking-[0.16em] ${
                   active
                     ? "text-ff-gold"
                     : "text-white/90 hover:text-white"
@@ -191,7 +192,7 @@ export function Header() {
         </nav>
 
         <div className="flex shrink-0 items-center justify-end gap-2 sm:gap-2.5">
-          <div className="hidden items-center gap-2 lg:flex xl:gap-2.5">
+          <div className="hidden items-center gap-2.5 xl:flex">
             {user ? (
               <UserAccountMenu user={user} onLogout={logout} />
             ) : (
@@ -210,7 +211,7 @@ export function Header() {
 
           <button
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ff-gold/60 text-ff-gold sm:h-10 sm:w-10 lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ff-gold/60 text-ff-gold transition hover:border-ff-gold hover:bg-ff-gold/10 xl:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -240,12 +241,12 @@ export function Header() {
 
       <div
         id="mobile-nav"
-        className={`border-t border-ff-gold/15 bg-ff-green-deep lg:hidden ${
+        className={`border-t border-ff-gold/15 bg-ff-green-deep xl:hidden ${
           open ? "block" : "hidden"
         }`}
       >
         <nav
-          className="mx-auto flex max-h-[calc(100svh-5.5rem)] max-w-7xl flex-col gap-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6"
+          className="mx-auto flex max-h-[calc(100svh-5.5rem)] max-w-7xl flex-col gap-0.5 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6"
           aria-label="Mobile"
         >
           {navLinks.map((link) => {
