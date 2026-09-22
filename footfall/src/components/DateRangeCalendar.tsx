@@ -369,11 +369,11 @@ export function DateRangeCalendar({
         aria-expanded={open}
         onClick={() => {
           if (disabled) return;
-          setOpen((v) => {
-            const next = !v;
-            if (next) onOpen?.();
-            return next;
-          });
+          const next = !open;
+          setOpen(next);
+          // Call parent outside setState updater to avoid updating
+          // BookingModal while DateRangeCalendar is rendering.
+          if (next) onOpen?.();
         }}
         disabled={disabled}
         className={`mt-2 flex w-full items-center justify-between gap-3 border border-ff-gold/35 bg-black/20 px-3.5 py-[0.7rem] text-left text-[0.875rem] normal-case tracking-normal outline-none transition hover:border-ff-gold/55 focus:border-ff-gold disabled:cursor-not-allowed disabled:opacity-55 ${

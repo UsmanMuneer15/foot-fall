@@ -2,7 +2,11 @@ import type { ServiceFeeRates, ServiceScope } from "@/lib/products";
 import { serviceFees } from "@/lib/products";
 import { authHeaders, type AuthUser } from "@/lib/auth";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+/** FootFall API root — must include /api/footfall */
+const API_BASE = (
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://egc-appointment-apis-d4715c28cb17.herokuapp.com/api/footfall"
+).replace(/\/$/, "");
 
 type ApiFees = {
   scope: ServiceScope;
@@ -48,7 +52,7 @@ async function parseError(res: Response, fallback: string) {
 export async function submitContact(
   payload: ContactPayload,
 ): Promise<void> {
-  const res = await fetch(`${API_URL}/api/contacts`, {
+  const res = await fetch(`${API_BASE}/contacts`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -65,7 +69,7 @@ export async function fetchServiceFeeRates(
   scope: ServiceScope,
 ): Promise<ServiceFeeRates> {
   try {
-    const res = await fetch(`${API_URL}/api/service-fees/${scope}`, {
+    const res = await fetch(`${API_BASE}/service-fees/${scope}`, {
       cache: "no-store",
     });
     if (!res.ok) throw new Error("API error");
@@ -92,7 +96,7 @@ export async function fetchServiceFeeRates(
 }
 
 export async function signup(input: SignupInput): Promise<AuthResult> {
-  const res = await fetch(`${API_URL}/api/user-auth/signup`, {
+  const res = await fetch(`${API_BASE}/user-auth/signup`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(input),
@@ -108,7 +112,7 @@ export async function login(
   email: string,
   password: string,
 ): Promise<AuthResult> {
-  const res = await fetch(`${API_URL}/api/user-auth/login`, {
+  const res = await fetch(`${API_BASE}/user-auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -121,7 +125,7 @@ export async function login(
 }
 
 export async function loginWithGoogle(idToken: string): Promise<AuthResult> {
-  const res = await fetch(`${API_URL}/api/user-auth/google`, {
+  const res = await fetch(`${API_BASE}/user-auth/google`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ idToken }),
@@ -137,7 +141,7 @@ export async function requestPasswordReset(email: string): Promise<{
   message: string;
   otp?: string;
 }> {
-  const res = await fetch(`${API_URL}/api/user-auth/forgot-password`, {
+  const res = await fetch(`${API_BASE}/user-auth/forgot-password`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email }),
@@ -146,16 +150,23 @@ export async function requestPasswordReset(email: string): Promise<{
     throw new Error(await parseError(res, "Failed to send reset code."));
   }
   const json = (await res.json()) as {
-    data: { message: string; otp?: string };
+    data?: { otp?: string; message?: string };
+    message?: string;
   };
-  return json.data;
+  return {
+    message:
+      json.message ||
+      json.data?.message ||
+      "If an account exists for that email, a reset code has been sent.",
+    otp: json.data?.otp,
+  };
 }
 
 export async function verifyResetOtp(
   email: string,
   otp: string,
 ): Promise<void> {
-  const res = await fetch(`${API_URL}/api/user-auth/verify-reset-otp`, {
+  const res = await fetch(`${API_BASE}/user-auth/verify-reset-otp`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, otp }),
@@ -171,7 +182,7 @@ export async function resetPassword(input: {
   password: string;
   confirmPassword: string;
 }): Promise<string> {
-  const res = await fetch(`${API_URL}/api/user-auth/reset-password`, {
+  const res = await fetch(`${API_BASE}/user-auth/reset-password`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(input),
@@ -179,8 +190,11 @@ export async function resetPassword(input: {
   if (!res.ok) {
     throw new Error(await parseError(res, "Failed to reset password."));
   }
-  const json = (await res.json()) as { data: { message: string } };
-  return json.data.message;
+  const json = (await res.json()) as {
+    data?: { message?: string; reset?: boolean };
+    message?: string;
+  };
+  return json.message || json.data?.message || "Password updated.";
 }
 
 export type BookingSubmitInput = {
@@ -222,7 +236,7 @@ export type BookingSubmitResult = {
 export async function submitBooking(
   input: BookingSubmitInput,
 ): Promise<BookingSubmitResult> {
-  const res = await fetch(`${API_URL}/api/bookings`, {
+  const res = await fetch(`${API_BASE}/bookings`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -252,7 +266,7 @@ export async function fetchProductAvailability(
   if (from) params.set("from", from);
   const qs = params.toString();
   const res = await fetch(
-    `${API_URL}/api/bookings/availability/${encodeURIComponent(productId)}${qs ? `?${qs}` : ""}`,
+    `${API_BASE}/bookings/availability/${encodeURIComponent(productId)}${qs ? `?${qs}` : ""}`,
     { cache: "no-store" },
   );
   if (!res.ok) {

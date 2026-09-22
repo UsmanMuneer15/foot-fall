@@ -28,8 +28,11 @@ export function getToasts() {
   return toasts;
 }
 
+/** Stable reference — getServerSnapshot must not return a new [] each call. */
+const EMPTY_SERVER_TOASTS: ToastItem[] = [];
+
 export function getServerToasts(): ToastItem[] {
-  return [];
+  return EMPTY_SERVER_TOASTS;
 }
 
 export function dismissToast(id: number) {
