@@ -9,8 +9,7 @@ import {
   type Product,
 } from "@/lib/products";
 import { BookingModal } from "@/components/BookingModal";
-import { getUser } from "@/lib/auth";
-import { toast } from "@/lib/toast";
+import { requireAuthForBooking } from "@/lib/bookingGate";
 
 type IconProps = { className?: string };
 
@@ -277,18 +276,12 @@ export function ActivationsMenu({
     };
   }, [variant, menuOpen, menuId]);
 
-  function requireAuthForBooking() {
-    const user = getUser();
-    if (user) return true;
-    setMenuOpen(false);
-    onNavigate?.();
-    toast.error("Please sign in to create an activation.");
-    router.push("/login");
-    return false;
-  }
-
   function openBooking(productId?: string) {
-    if (!requireAuthForBooking()) return;
+    if (!requireAuthForBooking(router)) {
+      setMenuOpen(false);
+      onNavigate?.();
+      return;
+    }
     setSelectedProductId(productId ?? null);
     setMenuOpen(false);
     onNavigate?.();

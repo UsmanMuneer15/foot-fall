@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import {
   BookingQuote,
   calculateBookingQuote,
@@ -28,10 +29,12 @@ import {
   rangeOverlapsBlocked,
   type BlockedDateRange,
 } from "@/components/DateRangeCalendar";
+import { useRouter } from "next/navigation";
+import { FieldErrorMessage } from "@/components/AuthForm";
+import { BookingSelect } from "@/components/BookingSelect";
 import { getUser } from "@/lib/auth";
 import { toast } from "@/lib/toast";
 import {
-  summarizeFieldErrors,
   toFieldErrors,
   UAE_EMIRATES,
   validateEmail,
@@ -86,18 +89,8 @@ const fieldErrorClass =
 const computedFieldClass =
   "mt-2 w-full cursor-default border border-ff-gold/25 bg-ff-gold/[0.07] px-3.5 py-[0.7rem] text-[0.875rem] font-medium normal-case tracking-normal text-ff-gold-light outline-none";
 
-const selectClass = `${fieldClass} appearance-none bg-[length:0.85rem] bg-[right_0.9rem_center] bg-no-repeat pr-10 [&>option]:bg-ff-green-deep [&>option]:text-white`;
-const selectErrorClass = `${fieldErrorClass} appearance-none bg-[length:0.85rem] bg-[right_0.9rem_center] bg-no-repeat pr-10 [&>option]:bg-ff-green-deep [&>option]:text-white`;
-
-const selectChevron =
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23c5a059' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")";
-
 function inputClass(hasError?: string) {
   return hasError ? fieldErrorClass : fieldClass;
-}
-
-function selectInputClass(hasError?: string) {
-  return hasError ? selectErrorClass : selectClass;
 }
 
 function SectionTitle({ children }: { children: ReactNode }) {
@@ -116,6 +109,7 @@ export function BookingModal({
   onClose,
   initialProductId = null,
 }: BookingModalProps) {
+  const router = useRouter();
   const minDate = useMemo(() => todayISODate(), []);
   const [scope, setScope] = useState<ServiceScope>("local");
   const [eventType, setEventType] = useState("");
@@ -147,7 +141,12 @@ export function BookingModal({
   const [blockedRanges, setBlockedRanges] = useState<BlockedDateRange[]>([]);
   const [availabilityLoading, setAvailabilityLoading] = useState(false);
   const [availabilityNonce, setAvailabilityNonce] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -159,8 +158,8 @@ export function BookingModal({
 
     const user = getUser();
     if (!user) {
-      toast.error("Please sign in to create an activation.");
       onClose();
+      router.push("/login");
       return;
     }
 
@@ -190,7 +189,7 @@ export function BookingModal({
     setAvailabilityLoading(false);
     setAvailabilityNonce((n) => n + 1);
     setErrors({});
-  }, [open, initialProductId, onClose]);
+  }, [open, initialProductId, onClose, router]);
 
   useEffect(() => {
     if (!open || !productId) {
@@ -255,17 +254,12 @@ export function BookingModal({
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
-      document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
     };
-  }, [open, onClose]);
+  }, [open]);
 
   const product = productId ? getProductById(productId) : undefined;
   const days = startDate && endDate ? daysInRange(startDate, endDate) : 0;
@@ -398,12 +392,8 @@ export function BookingModal({
     });
 
     setErrors(next);
-    const summary = summarizeFieldErrors(next);
-    if (summary) {
-      toast.error(summary);
-      return false;
-    }
-    return true;
+    // Field-level messages under each input are the primary UX.
+    return Object.keys(next).length === 0;
   }
 
   async function onSubmit(e: FormEvent) {
@@ -453,18 +443,15 @@ export function BookingModal({
     }
   }
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-[120] flex items-start justify-center overflow-y-auto bg-black/75 px-3 py-4 backdrop-blur-[3px] sm:px-6 sm:py-8"
       role="dialog"
       aria-modal="true"
       aria-labelledby="booking-modal-title"
       ref={overlayRef}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
     >
       <div className="relative my-auto w-full max-w-5xl overflow-hidden rounded-sm border border-ff-gold/30 bg-ff-green-deep shadow-[0_40px_100px_rgba(0,0,0,0.65)]">
         {/* Subtle top gold edge */}
@@ -564,52 +551,52 @@ export function BookingModal({
                     </div>
 
                     <div className="grid items-start gap-4 sm:grid-cols-2">
-                      <label className={labelClass} htmlFor="event-type">
-                        Type of Event
-                        <select
+                      <div>
+                        <label className={labelClass} htmlFor="event-type">
+                          Type of Event
+                        </label>
+                        <BookingSelect
                           id="event-type"
-                          className={selectInputClass(errors.eventType)}
-                          style={{ backgroundImage: selectChevron }}
                           value={eventType}
-                          onChange={(e) => {
-                            setEventType(e.target.value);
+                          placeholder="Select event type"
+                          hasError={Boolean(errors.eventType)}
+                          aria-invalid={Boolean(errors.eventType)}
+                          options={eventTypes.map((t) => ({
+                            value: t,
+                            label: t,
+                          }))}
+                          onChange={(next) => {
+                            setEventType(next);
                             clearFieldError("eventType");
                           }}
-                          aria-invalid={Boolean(errors.eventType)}
-                        >
-                          <option value="">Select event type</option>
-                          {eventTypes.map((t) => (
-                            <option key={t} value={t}>
-                              {t}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
+                        />
+                        <FieldErrorMessage error={errors.eventType} />
+                      </div>
 
-                      <label className={labelClass} htmlFor="product">
-                        Product
-                        <select
+                      <div>
+                        <label className={labelClass} htmlFor="product">
+                          Product
+                        </label>
+                        <BookingSelect
                           id="product"
-                          className={selectInputClass(errors.productId)}
-                          style={{ backgroundImage: selectChevron }}
                           value={productId}
-                          onChange={(e) => {
-                            setProductId(e.target.value);
+                          placeholder="Choose a product"
+                          hasError={Boolean(errors.productId)}
+                          aria-invalid={Boolean(errors.productId)}
+                          options={products.map((p) => ({
+                            value: p.id,
+                            label: p.name,
+                          }))}
+                          onChange={(next) => {
+                            setProductId(next);
                             setStartDate("");
                             setEndDate("");
                             clearFieldError("productId");
                             clearFieldError("dates");
                           }}
-                          aria-invalid={Boolean(errors.productId)}
-                        >
-                          <option value="">Choose a product</option>
-                          {products.map((p) => (
-                            <option key={p.id} value={p.id}>
-                              {p.name}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
+                        />
+                        <FieldErrorMessage error={errors.productId} />
+                      </div>
 
                       <div className="min-w-0 sm:col-span-2">
                         <label
@@ -637,6 +624,7 @@ export function BookingModal({
                             clearFieldError("dates");
                           }}
                         />
+                        <FieldErrorMessage error={errors.dates} />
                         {productId ? (
                           <p className="mt-1.5 text-[0.68rem] text-white/45">
                             {availabilityLoading
@@ -702,6 +690,7 @@ export function BookingModal({
                         autoComplete="name"
                         aria-invalid={Boolean(errors.customerName)}
                       />
+                      <FieldErrorMessage error={errors.customerName} />
                     </label>
 
                     <label className={labelClass} htmlFor="customer-email">
@@ -718,6 +707,7 @@ export function BookingModal({
                         autoComplete="email"
                         aria-invalid={Boolean(errors.customerEmail)}
                       />
+                      <FieldErrorMessage error={errors.customerEmail} />
                     </label>
 
                     <label
@@ -742,6 +732,7 @@ export function BookingModal({
                         autoComplete="tel"
                         aria-invalid={Boolean(errors.customerPhone)}
                       />
+                      <FieldErrorMessage error={errors.customerPhone} />
                     </label>
                   </div>
                 </section>
@@ -805,6 +796,7 @@ export function BookingModal({
                         placeholder="Building, street, landmark"
                         aria-invalid={Boolean(errors.addressLine)}
                       />
+                      <FieldErrorMessage error={errors.addressLine} />
                     </label>
 
                     <label className={labelClass} htmlFor="area-community">
@@ -820,29 +812,30 @@ export function BookingModal({
                         placeholder="e.g. Dubai Marina"
                         aria-invalid={Boolean(errors.area)}
                       />
+                      <FieldErrorMessage error={errors.area} />
                     </label>
 
-                    <label className={labelClass} htmlFor="emirate">
-                      Emirate
-                      <select
+                    <div>
+                      <label className={labelClass} htmlFor="emirate">
+                        Emirate
+                      </label>
+                      <BookingSelect
                         id="emirate"
-                        className={selectInputClass(errors.emirate)}
-                        style={{ backgroundImage: selectChevron }}
                         value={emirate}
-                        onChange={(e) => {
-                          setEmirate(e.target.value);
+                        placeholder="Select emirate"
+                        hasError={Boolean(errors.emirate)}
+                        aria-invalid={Boolean(errors.emirate)}
+                        options={UAE_EMIRATES.map((item) => ({
+                          value: item,
+                          label: item,
+                        }))}
+                        onChange={(next) => {
+                          setEmirate(next);
                           clearFieldError("emirate");
                         }}
-                        aria-invalid={Boolean(errors.emirate)}
-                      >
-                        <option value="">Select emirate</option>
-                        {UAE_EMIRATES.map((item) => (
-                          <option key={item} value={item}>
-                            {item}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
+                      />
+                      <FieldErrorMessage error={errors.emirate} />
+                    </div>
 
                     <label
                       className={`${labelClass} sm:col-span-2`}
@@ -983,6 +976,7 @@ export function BookingModal({
                     autoComplete="cc-name"
                     aria-invalid={Boolean(errors.cardName)}
                   />
+                  <FieldErrorMessage error={errors.cardName} />
                 </label>
                 <label className={labelClass}>
                   Card Number
@@ -1004,6 +998,7 @@ export function BookingModal({
                     autoComplete="cc-number"
                     aria-invalid={Boolean(errors.cardNumber)}
                   />
+                  <FieldErrorMessage error={errors.cardNumber} />
                 </label>
                 <label className={labelClass}>
                   Expiry
@@ -1020,6 +1015,7 @@ export function BookingModal({
                     autoComplete="cc-exp"
                     aria-invalid={Boolean(errors.cardExpiry)}
                   />
+                  <FieldErrorMessage error={errors.cardExpiry} />
                 </label>
                 <label className={labelClass}>
                   CVC
@@ -1035,6 +1031,7 @@ export function BookingModal({
                     autoComplete="cc-csc"
                     aria-invalid={Boolean(errors.cardCvc)}
                   />
+                  <FieldErrorMessage error={errors.cardCvc} />
                 </label>
               </div>
 
@@ -1057,7 +1054,8 @@ export function BookingModal({
           </form>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

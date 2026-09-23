@@ -15,7 +15,6 @@ import {
 } from "@/lib/api";
 import { toast } from "@/lib/toast";
 import {
-  summarizeFieldErrors,
   toFieldErrors,
   validateConfirmPassword,
   validateEmail,
@@ -61,11 +60,7 @@ export default function ForgotPasswordPage() {
     const next = toFieldErrors({ email: validateEmail(email) });
     setErrors(next);
     markTouched("email");
-    const summary = summarizeFieldErrors(next);
-    if (summary) {
-      toast.error(summary);
-      return;
-    }
+    if (Object.keys(next).length > 0) return;
 
     setLoading(true);
     try {
@@ -87,11 +82,7 @@ export default function ForgotPasswordPage() {
     const next = toFieldErrors({ otp: validateOtp(otp) });
     setErrors(next);
     markTouched("otp");
-    const summary = summarizeFieldErrors(next);
-    if (summary) {
-      toast.error(summary);
-      return;
-    }
+    if (Object.keys(next).length > 0) return;
 
     setLoading(true);
     try {
@@ -120,11 +111,7 @@ export default function ForgotPasswordPage() {
       password: true,
       confirmPassword: true,
     }));
-    const summary = summarizeFieldErrors(next);
-    if (summary) {
-      toast.error(summary);
-      return;
-    }
+    if (Object.keys(next).length > 0) return;
 
     setLoading(true);
     try {

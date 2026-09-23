@@ -116,6 +116,18 @@ function EyeOffIcon({ className = "" }: { className?: string }) {
   );
 }
 
+export function FieldErrorMessage({ error }: { error?: string }) {
+  if (!error) return null;
+  return (
+    <span
+      className="mt-1.5 block text-[0.7rem] normal-case tracking-normal text-red-300"
+      role="alert"
+    >
+      {error}
+    </span>
+  );
+}
+
 export function PasswordField({
   label,
   value,
@@ -163,6 +175,7 @@ export function PasswordField({
           )}
         </button>
       </span>
+      <FieldErrorMessage error={error} />
     </label>
   );
 }
@@ -214,6 +227,7 @@ export function AuthTextField({
         inputMode={inputMode}
         aria-invalid={Boolean(error)}
       />
+      <FieldErrorMessage error={error} />
     </label>
   );
 }

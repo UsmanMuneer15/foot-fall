@@ -15,7 +15,6 @@ import type { AuthResult } from "@/lib/api";
 import { setSession } from "@/lib/auth";
 import { toast } from "@/lib/toast";
 import {
-  summarizeFieldErrors,
   toFieldErrors,
   validateConfirmPassword,
   validateEmail,
@@ -140,12 +139,8 @@ export default function SignupPage() {
       password: true,
       confirmPassword: true,
     });
-    const summary = summarizeFieldErrors(next);
-    if (summary) {
-      toast.error(summary);
-      return false;
-    }
-    return true;
+    // Field-level messages under each input are the primary UX.
+    return Object.keys(next).length === 0;
   }
 
   async function onSubmit(e: FormEvent) {

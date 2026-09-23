@@ -13,7 +13,12 @@ export function validateName(value: string): string | null {
 export function validateEmail(value: string): string | null {
   const email = value.trim();
   if (!email) return "Please enter your email.";
-  if (!EMAIL_RE.test(email)) return "Enter a valid email address.";
+  if (!email.includes("@")) {
+    return "Email must include an @ symbol (e.g. name@example.com).";
+  }
+  if (!EMAIL_RE.test(email)) {
+    return "Enter a valid email address (e.g. name@example.com).";
+  }
   return null;
 }
 
@@ -71,6 +76,52 @@ export function validateRequiredText(
   return null;
 }
 
+/** Optional text: empty is OK; if filled, enforce a minimum length. */
+export function validateOptionalText(
+  value: string,
+  label: string,
+  minLength = 2,
+): string | null {
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  if (trimmed.length < minLength) {
+    return `${label} must be at least ${minLength} characters.`;
+  }
+  return null;
+}
+
+export function validateAttendance(
+  value: string,
+  required = false,
+): string | null {
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return required ? "Please enter expected attendance." : null;
+  }
+  if (!/^\d+$/.test(trimmed)) {
+    return "Expected attendance must be a whole number.";
+  }
+  const n = Number(trimmed);
+  if (n < 1) return "Expected attendance must be at least 1.";
+  if (n > 1_000_000) return "Expected attendance looks too high.";
+  return null;
+}
+
+export function validateEventDate(
+  value: string,
+  minDate: string,
+  required = false,
+): string | null {
+  if (!value) {
+    return required ? "Please select an event date." : null;
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return "Enter a valid event date.";
+  }
+  if (value < minDate) return "Event date cannot be in the past.";
+  return null;
+}
+
 export const UAE_EMIRATES = [
   "Abu Dhabi",
   "Dubai",
@@ -102,6 +153,11 @@ export function countErrors(errors: Record<string, string | null | undefined>) {
   return Object.values(errors).filter(Boolean).length;
 }
 
+/**
+ * Optional toast summary for client-side validation.
+ * Prefer under-field messages as primary UX — returns null when multiple
+ * fields fail so we never show a vague multi-field toast.
+ */
 export function summarizeFieldErrors(
   errors: Record<string, string | null | undefined>,
 ) {
@@ -110,7 +166,7 @@ export function summarizeFieldErrors(
   );
   if (messages.length === 0) return null;
   if (messages.length === 1) return messages[0];
-  return "Please fix the fields highlighted below.";
+  return null;
 }
 
 /** Keep only defined error strings for form state. */

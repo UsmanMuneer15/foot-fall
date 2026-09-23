@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CreateActivationButton } from "@/components/CreateActivationButton";
 
 export function Hero() {
   return (
@@ -33,12 +34,7 @@ export function Hero() {
             >
               Explore Experiences
             </Link>
-            <Link
-              href="/contact"
-              className="btn-outline-gold w-full justify-center sm:w-auto"
-            >
-              Create an Activation
-            </Link>
+            <CreateActivationButton className="btn-outline-gold w-full justify-center sm:w-auto" />
           </div>
         </div>
       </div>

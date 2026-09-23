@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { CreateActivationButton } from "@/components/CreateActivationButton";
 import { PageHero } from "@/components/PageHero";
 
 export const metadata: Metadata = {
@@ -67,9 +67,7 @@ export default function AboutPage() {
               equipment and infrastructure required to deliver those
               experiences.
             </p>
-            <Link href="/contact" className="btn-gold mt-8">
-              Create an Activation
-            </Link>
+            <CreateActivationButton className="btn-gold mt-8" />
           </div>
         </div>
       </section>
