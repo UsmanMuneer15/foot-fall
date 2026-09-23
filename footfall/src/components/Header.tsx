@@ -196,14 +196,9 @@ export function Header() {
             {user ? (
               <UserAccountMenu user={user} onLogout={logout} />
             ) : (
-              <>
-                {/* <Link href="/login" className={headerBtnClass}>
-                  Sign in
-                </Link> */}
-                <Link href="/signup" className={headerBtnClass}>
-                  Sign up
-                </Link>
-              </>
+              <Link href="/login" className={headerBtnClass}>
+                Sign in
+              </Link>
             )}
 
             <ActivationsMenu variant="desktop" />
@@ -293,22 +288,13 @@ export function Header() {
                 </button>
               </>
             ) : (
-              <>
-                {/* <Link
-                  href="/login"
-                  onClick={() => setOpen(false)}
-                  className="flex w-full items-center justify-center rounded-full border border-ff-gold/80 bg-transparent px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white transition hover:border-ff-gold hover:bg-ff-gold/10"
-                >
-                  Sign in
-                </Link> */}
-                <Link
-                  href="/signup"
-                  onClick={() => setOpen(false)}
-                  className="flex w-full items-center justify-center rounded-full border border-ff-gold/80 bg-transparent px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white transition hover:border-ff-gold hover:bg-ff-gold/10"
-                >
-                  Sign up
-                </Link>
-              </>
+              <Link
+                href="/login"
+                onClick={() => setOpen(false)}
+                className="flex w-full items-center justify-center rounded-full border border-ff-gold/80 bg-transparent px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white transition hover:border-ff-gold hover:bg-ff-gold/10"
+              >
+                Sign in
+              </Link>
             )}
           </div>
 
