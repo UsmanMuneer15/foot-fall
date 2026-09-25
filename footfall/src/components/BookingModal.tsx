@@ -42,6 +42,7 @@ import {
   validateName,
   validatePhone,
   validateRequiredText,
+  normalizePhone,
 } from "@/lib/validation";
 
 type BookingModalProps = {
@@ -412,7 +413,9 @@ export function BookingModal({
         days,
         customerName: customerName.trim(),
         customerEmail: customerEmail.trim(),
-        customerPhone: customerPhone.trim() || undefined,
+        customerPhone: customerPhone.trim()
+          ? normalizePhone(customerPhone)
+          : undefined,
         addressLine: addressLine.trim(),
         area: area.trim(),
         emirate,
@@ -725,10 +728,12 @@ export function BookingModal({
                         value={customerPhone}
                         onChange={(e) => {
                           setCustomerPhone(
-                            e.target.value.replace(/[^\d+\s()-]/g, ""),
+                            e.target.value.replace(/[^\d+\s().-]/g, ""),
                           );
                           clearFieldError("customerPhone");
                         }}
+                        placeholder="+971 50 123 4567"
+                        maxLength={25}
                         autoComplete="tel"
                         aria-invalid={Boolean(errors.customerPhone)}
                       />

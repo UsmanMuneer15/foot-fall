@@ -4,6 +4,7 @@ import { FormEvent, useMemo, useState } from "react";
 import { FieldErrorMessage } from "@/components/AuthForm";
 import { submitContact } from "@/lib/api";
 import {
+  normalizePhone,
   toFieldErrors,
   validateAttendance,
   validateEmail,
@@ -180,7 +181,9 @@ export function ContactForm() {
         name: values.name.trim(),
         company: values.company.trim(),
         email: values.email.trim(),
-        telephone: values.telephone.trim() || undefined,
+        telephone: values.telephone.trim()
+          ? normalizePhone(values.telephone)
+          : undefined,
         eventVenue: values.eventVenue.trim() || undefined,
         eventDate: values.eventDate || undefined,
         location: values.location.trim() || undefined,
@@ -273,10 +276,14 @@ export function ContactForm() {
             autoComplete="tel"
             value={values.telephone}
             onChange={(e) =>
-              onChange("telephone", e.target.value.replace(/[^\d+\s()-]/g, ""))
+              onChange(
+                "telephone",
+                e.target.value.replace(/[^\d+\s().-]/g, ""),
+              )
             }
             onBlur={() => onBlur("telephone")}
-            maxLength={40}
+            maxLength={25}
+            placeholder="+971 50 123 4567"
             aria-invalid={Boolean(errors.telephone)}
             className={fieldClass(errors.telephone)}
           />

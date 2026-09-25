@@ -15,6 +15,7 @@ import type { AuthResult } from "@/lib/api";
 import { setSession } from "@/lib/auth";
 import { toast } from "@/lib/toast";
 import {
+  normalizePhone,
   toFieldErrors,
   validateConfirmPassword,
   validateEmail,
@@ -153,7 +154,7 @@ export default function SignupPage() {
       const data = await signup({
         name: name.trim(),
         email: email.trim(),
-        phone: phone.trim() || undefined,
+        phone: phone.trim() ? normalizePhone(phone) : undefined,
         password,
         confirmPassword,
       });
@@ -215,16 +216,17 @@ export default function SignupPage() {
           autoComplete="tel"
           value={phone}
           onChange={(value) => {
-            setPhone(value);
+            const next = value.replace(/[^\d+\s().-]/g, "");
+            setPhone(next);
             if (touched.phone || errors.phone) {
-              validateField("phone", { phone: value });
+              validateField("phone", { phone: next });
             }
           }}
           onBlur={() => {
             markTouched("phone");
             validateField("phone");
           }}
-          maxLength={40}
+          maxLength={25}
           optional
           error={errors.phone}
         />

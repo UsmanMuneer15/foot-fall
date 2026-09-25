@@ -1,6 +1,13 @@
+import {
+  isValidPhoneNumber,
+  parsePhoneNumberFromString,
+} from "libphonenumber-js";
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_RE = /^\+?[\d\s()-]{7,20}$/;
 const OTP_RE = /^\d{6}$/;
+
+/** Default region for numbers entered without a leading + */
+const DEFAULT_PHONE_COUNTRY = "AE" as const;
 
 export function validateName(value: string): string | null {
   const name = value.trim();
@@ -22,13 +29,44 @@ export function validateEmail(value: string): string | null {
   return null;
 }
 
+/**
+ * Accept international or plain phone numbers.
+ * Allows values like +1 (503) 519-7276, 9503909394, 034983489384.
+ */
 export function validatePhone(value: string, required = false): string | null {
   const phone = value.trim();
   if (!phone) return required ? "Please enter your phone number." : null;
-  if (!PHONE_RE.test(phone) || !/\d{7,}/.test(phone)) {
+
+  if (isValidPhoneNumber(phone)) return null;
+  if (isValidPhoneNumber(phone, DEFAULT_PHONE_COUNTRY)) return null;
+
+  const parsed =
+    parsePhoneNumberFromString(phone) ||
+    parsePhoneNumberFromString(phone, DEFAULT_PHONE_COUNTRY);
+  if (parsed?.isValid()) return null;
+
+  // Fallback: accept any number with enough digits (all countries / local formats)
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length >= 7 && digits.length <= 15) return null;
+
+  if (digits.length < 7) {
     return "Enter a valid phone number (at least 7 digits).";
   }
-  return null;
+  return "Enter a valid phone number (up to 15 digits).";
+}
+
+/** Normalize to E.164 when possible; otherwise keep digits (with leading + if present). */
+export function normalizePhone(value: string): string {
+  const phone = value.trim();
+  if (!phone) return "";
+  const parsed =
+    parsePhoneNumberFromString(phone) ||
+    parsePhoneNumberFromString(phone, DEFAULT_PHONE_COUNTRY);
+  if (parsed?.isValid()) return parsed.format("E.164");
+
+  const digits = phone.replace(/\D/g, "");
+  if (phone.startsWith("+") && digits) return `+${digits}`;
+  return digits || phone;
 }
 
 export function validatePassword(value: string): string | null {
