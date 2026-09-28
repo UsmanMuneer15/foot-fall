@@ -62,11 +62,12 @@ type FieldKey =
   | "area"
   | "emirate"
   | "poBox"
-  | "notes"
-  | "cardName"
-  | "cardNumber"
-  | "cardExpiry"
-  | "cardCvc";
+  | "notes";
+  // Card checkout fields (temporarily disabled — restore with Pay by Card UI)
+  // | "cardName"
+  // | "cardNumber"
+  // | "cardExpiry"
+  // | "cardCvc";
 
 type FieldErrors = Partial<Record<FieldKey, string>>;
 
@@ -130,10 +131,11 @@ export function BookingModal({
   const [longitude, setLongitude] = useState<number | null>(null);
   const [locating, setLocating] = useState(false);
 
-  const [cardName, setCardName] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [cardExpiry, setCardExpiry] = useState("");
-  const [cardCvc, setCardCvc] = useState("");
+  // Card checkout (temporarily disabled)
+  // const [cardName, setCardName] = useState("");
+  // const [cardNumber, setCardNumber] = useState("");
+  // const [cardExpiry, setCardExpiry] = useState("");
+  // const [cardCvc, setCardCvc] = useState("");
   const [paid, setPaid] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [bookingCode, setBookingCode] = useState("");
@@ -179,10 +181,10 @@ export function BookingModal({
     setNotes("");
     setLatitude(null);
     setLongitude(null);
-    setCardName("");
-    setCardNumber("");
-    setCardExpiry("");
-    setCardCvc("");
+    // setCardName("");
+    // setCardNumber("");
+    // setCardExpiry("");
+    // setCardCvc("");
     setPaid(false);
     setSubmitting(false);
     setBookingCode("");
@@ -379,17 +381,18 @@ export function BookingModal({
       emirate: validateEmirate(emirate),
       poBox: null,
       notes: null,
-      cardName: cardName.trim()
-        ? null
-        : "Please enter the name on the card.",
-      cardNumber:
-        cardNumber.replace(/\s/g, "").length < 12
-          ? "Enter a valid card number."
-          : null,
-      cardExpiry: /^\d{2}\/\d{2}$/.test(cardExpiry)
-        ? null
-        : "Enter card expiry as MM/YY.",
-      cardCvc: cardCvc.length < 3 ? "Enter a valid CVC." : null,
+      // Card fields not required while Pay by Card is disabled
+      // cardName: cardName.trim()
+      //   ? null
+      //   : "Please enter the name on the card.",
+      // cardNumber:
+      //   cardNumber.replace(/\s/g, "").length < 12
+      //     ? "Enter a valid card number."
+      //     : null,
+      // cardExpiry: /^\d{2}\/\d{2}$/.test(cardExpiry)
+      //   ? null
+      //   : "Enter card expiry as MM/YY.",
+      // cardCvc: cardCvc.length < 3 ? "Enter a valid CVC." : null,
     });
 
     setErrors(next);
@@ -960,6 +963,7 @@ export function BookingModal({
 
             {/* Checkout footer */}
             <div className="border-t border-ff-gold/20 bg-black/25 px-5 py-5 sm:px-8 sm:py-6">
+              {/* Pay by Card — temporarily disabled
               <div className="mb-4 flex items-center gap-3">
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-ff-gold">
                   Checkout — Pay by Card
@@ -1039,20 +1043,15 @@ export function BookingModal({
                   <FieldErrorMessage error={errors.cardCvc} />
                 </label>
               </div>
+              */}
 
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-[0.68rem] leading-relaxed text-white/40">
-                  Demo checkout — card details are not sent to a payment
-                  processor yet.
-                </p>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
                 <button
                   type="submit"
                   disabled={submitting}
                   className="btn-gold !min-w-[14rem] !justify-center !px-8 !py-3.5 !text-[0.72rem] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {submitting
-                    ? "Submitting…"
-                    : `Pay ${quote ? formatAed(quote.total) : ""} →`}
+                  {submitting ? "Submitting…" : "Submit"}
                 </button>
               </div>
             </div>
