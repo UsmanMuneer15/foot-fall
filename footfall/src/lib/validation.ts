@@ -218,3 +218,32 @@ export function toFieldErrors<T extends Record<string, string | null>>(
   }
   return next;
 }
+
+/**
+ * Scroll and focus the first invalid field in form order after a failed submit.
+ * Resolves the element via `getElement` so each form can map its own selectors.
+ */
+export function focusFirstInvalidField(
+  errors: Record<string, string | null | undefined>,
+  fieldOrder: readonly string[],
+  getElement: (field: string) => HTMLElement | null,
+) {
+  const first = fieldOrder.find((field) => Boolean(errors[field]));
+  if (!first) return;
+
+  // Defer until after React paints error styles / messages.
+  window.requestAnimationFrame(() => {
+    const el = getElement(first);
+    if (!el) return;
+
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    if (typeof el.focus === "function") {
+      try {
+        el.focus({ preventScroll: true });
+      } catch {
+        el.focus();
+      }
+    }
+  });
+}

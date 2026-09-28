@@ -1,9 +1,10 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useMemo, useRef, useState } from "react";
 import { FieldErrorMessage } from "@/components/AuthForm";
 import { submitContact } from "@/lib/api";
 import {
+  focusFirstInvalidField,
   normalizePhone,
   toFieldErrors,
   validateAttendance,
@@ -26,6 +27,19 @@ type FieldName =
   | "attendance"
   | "goal"
   | "message";
+
+const FIELD_ORDER: FieldName[] = [
+  "name",
+  "company",
+  "email",
+  "telephone",
+  "eventVenue",
+  "eventDate",
+  "location",
+  "attendance",
+  "goal",
+  "message",
+];
 
 type FormValues = Record<FieldName, string>;
 
@@ -60,6 +74,7 @@ function fieldClass(hasError?: string) {
 
 export function ContactForm() {
   const minDate = useMemo(() => todayISODate(), []);
+  const formRef = useRef<HTMLFormElement>(null);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
@@ -154,7 +169,14 @@ export function ContactForm() {
       goal: true,
       message: true,
     });
-    return Object.keys(next).length === 0;
+    const invalid = Object.keys(next).length > 0;
+    if (invalid) {
+      focusFirstInvalidField(next, FIELD_ORDER, (field) =>
+        formRef.current?.querySelector<HTMLElement>(`[name="${field}"]`) ??
+        null,
+      );
+    }
+    return !invalid;
   }
 
   function onChange(field: FieldName, value: string) {
@@ -218,7 +240,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5" noValidate>
+    <form ref={formRef} onSubmit={onSubmit} className="space-y-5" noValidate>
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block text-xs uppercase tracking-[0.16em] text-ff-gold">
           Name

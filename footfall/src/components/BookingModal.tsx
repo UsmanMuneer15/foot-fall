@@ -35,6 +35,7 @@ import { BookingSelect } from "@/components/BookingSelect";
 import { getUser } from "@/lib/auth";
 import { toast } from "@/lib/toast";
 import {
+  focusFirstInvalidField,
   toFieldErrors,
   UAE_EMIRATES,
   validateEmail,
@@ -68,6 +69,34 @@ type FieldKey =
   // | "cardNumber"
   // | "cardExpiry"
   // | "cardCvc";
+
+const BOOKING_FIELD_ORDER: FieldKey[] = [
+  "eventType",
+  "productId",
+  "dates",
+  "customerName",
+  "customerEmail",
+  "customerPhone",
+  "addressLine",
+  "area",
+  "emirate",
+  "poBox",
+  "notes",
+];
+
+const BOOKING_FIELD_IDS: Record<FieldKey, string> = {
+  eventType: "event-type",
+  productId: "product",
+  dates: "booking-date-range",
+  customerName: "customer-name",
+  customerEmail: "customer-email",
+  customerPhone: "customer-phone",
+  addressLine: "address-line",
+  area: "area-community",
+  emirate: "emirate",
+  poBox: "po-box",
+  notes: "special-notes",
+};
 
 type FieldErrors = Partial<Record<FieldKey, string>>;
 
@@ -396,8 +425,14 @@ export function BookingModal({
     });
 
     setErrors(next);
+    const invalid = Object.keys(next).length > 0;
+    if (invalid) {
+      focusFirstInvalidField(next, BOOKING_FIELD_ORDER, (field) =>
+        document.getElementById(BOOKING_FIELD_IDS[field as FieldKey]),
+      );
+    }
     // Field-level messages under each input are the primary UX.
-    return Object.keys(next).length === 0;
+    return !invalid;
   }
 
   async function onSubmit(e: FormEvent) {
