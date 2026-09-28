@@ -8,6 +8,17 @@ export const navLinks = [
   { href: "/contact", label: "Contact" },
 ] as const;
 
+/** Official FOOTFALL company contact details (Footer). */
+export const companyContact = {
+  email: "info@footfall.ae",
+  emailHref: "mailto:info@footfall.ae",
+  phone: "04 5064510",
+  phoneHref: "tel:+97145064510",
+  poBox: "P.O. Box 417541",
+  website: "www.footfall.ae",
+  websiteHref: "https://www.footfall.ae",
+} as const;
+
 export const services = [
   {
     line1: "Experiential",

@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { companyContact } from "@/lib/content";
 
 const AUTH_ROUTES = ["/login", "/signup", "/forgot-password"];
 
@@ -27,8 +28,42 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-ff-gold/10">
-        <div className="mx-auto max-w-[1440px] px-4 py-5 text-center text-[0.68rem] font-medium uppercase tracking-[0.14em] text-white/80 sm:px-8 lg:px-12">
-          <p>© {new Date().getFullYear()} FOOTFALL GLOBAL LLC</p>
+        <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-3 px-4 py-5 text-center sm:px-8 lg:px-12">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[0.68rem] font-medium uppercase tracking-[0.14em] text-white/80">
+            <a
+              href={companyContact.emailHref}
+              className="transition hover:text-ff-gold"
+            >
+              {companyContact.email}
+            </a>
+            <span className="hidden text-ff-gold/50 sm:inline" aria-hidden>
+              |
+            </span>
+            <a
+              href={companyContact.phoneHref}
+              className="transition hover:text-ff-gold"
+            >
+              {companyContact.phone}
+            </a>
+            <span className="hidden text-ff-gold/50 sm:inline" aria-hidden>
+              |
+            </span>
+            <span>{companyContact.poBox}</span>
+            <span className="hidden text-ff-gold/50 sm:inline" aria-hidden>
+              |
+            </span>
+            <a
+              href={companyContact.websiteHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition hover:text-ff-gold"
+            >
+              {companyContact.website}
+            </a>
+          </div>
+          <p className="text-[0.68rem] font-medium uppercase tracking-[0.14em] text-white/80">
+            © {new Date().getFullYear()} FOOTFALL GLOBAL LLC
+          </p>
         </div>
       </div>
     </footer>
