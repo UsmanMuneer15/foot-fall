@@ -1082,6 +1082,14 @@ export function BookingModal({
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
                 <button
+                  type="button"
+                  onClick={onClose}
+                  disabled={submitting}
+                  className="inline-flex min-w-[14rem] items-center justify-center rounded-full border border-ff-gold/60 bg-transparent px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-ff-gold transition hover:border-ff-gold hover:bg-ff-gold/10 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  Cancel
+                </button>
+                <button
                   type="submit"
                   disabled={submitting}
                   className="btn-gold !min-w-[14rem] !justify-center !px-8 !py-3.5 !text-[0.72rem] disabled:cursor-not-allowed disabled:opacity-60"
