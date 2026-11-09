@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
+import { GoogleTags } from "@/components/GoogleTags";
 import { Header } from "@/components/Header";
 import "./globals.css";
 
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
       <body className="flex min-h-full flex-col bg-ff-green-deep font-sans text-white">
+        <GoogleTags />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
