@@ -1,15 +1,29 @@
-# FOOTFALL GLOBAL LLC
+# FOOTFALL Website
 
-This folder is an older working copy.
+Remote: https://github.com/UsmanMuneer15/foot-fall
 
-**Use the website repository here instead:**
+The Next.js app is in `footfall/`.
 
-`E:\Spark Ai\FootFall-web`
-
-Remote: `https://github.com/UsmanMuneer15/foot-fall.git`
+## Local development
 
 ```bash
-cd "E:\Spark Ai\FootFall-web"
+cd footfall
 npm install
 npm run dev
 ```
+
+Website: http://localhost:3000
+
+## Vercel (required settings)
+
+Open the project → **Settings → General / Build & Development Settings**:
+
+| Setting | Value |
+|---|---|
+| **Root Directory** | `footfall` |
+| Framework Preset | Next.js |
+| Install Command | *default* (`npm install`) — clear any override |
+| Build Command | *default* (`npm run build`) — clear any override |
+| Output Directory | *default* — leave empty / not overridden |
+
+Do **not** use `--prefix footfall` or copy `.next` from the repo root. With Root Directory = `footfall`, Vercel already builds inside that folder.
